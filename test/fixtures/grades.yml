@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  student: one
+  admin: one
+  score: 1.5
+  comment: MyText
+  subject: MyString
+
+two:
+  student: two
+  admin: two
+  score: 1.5
+  comment: MyText
+  subject: MyString

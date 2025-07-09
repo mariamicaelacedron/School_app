@@ -1,0 +1,24 @@
+<div class="container">
+  <h1>Mi Panel</h1>
+  
+  <% if current_user.admin? %>
+    <div class="alert alert-info">
+      Bienvenido Administrador
+    </div>
+  <% else %>
+    <div class="alert alert-success">
+      Bienvenido Usuario
+    </div>
+    
+    <h2>Mis Calificaciones</h2>
+    <% if @grades.any? %>
+      <ul>
+        <% @grades.each do |grade| %>
+          <li><%= grade.subject %>: <%= grade.score %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No tienes calificaciones registradas</p>
+    <% end %>
+  <% end %>
+</div>
