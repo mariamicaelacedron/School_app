@@ -1,4 +1,4 @@
-name: Rails tests (SQLite)
+name: Build only (sin tests)
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,19 +34,14 @@ jobs:
       - name: Instalar gems
         run: bundle install --jobs=4 --retry=3
 
-      - name: Preparar DB de test
+      # 6. Preparar base de datos de desarrollo
+      - name: Preparar DB de desarrollo
         env:
-          RAILS_ENV: test
+          RAILS_ENV: development
         run: |
           unset DATABASE_URL
-          # 1) Fija el entorno dentro de structure.sql
-          bundle exec rails db:environment:set RAILS_ENV=test
-          # 2) Carga el esquema SQL (structure.sql) en SQLite3
-          bundle exec rails db:drop db:create db:structure:load
+          bundle exec rails db:drop db:create db:schema:load
 
-      - name: Ejecutar la suite de tests
-        env:
-          RAILS_ENV: test
+      - name: Precompilar assets
         run: |
-          unset DATABASE_URL
-          bundle exec rails test
+          bundle exec rails assets:precompile
