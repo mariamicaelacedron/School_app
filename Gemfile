@@ -17,7 +17,7 @@ gem "kamal", require: false
 gem "thruster", require: false
 
 group :development, :test do
-  gem "sqlite3" # Movido aquí desde solo :test
+  gem "sqlite3"  # SQLite3 solo para desarrollo y pruebas
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
@@ -30,5 +30,9 @@ end
 group :test do
   gem "capybara"
   gem "selenium-webdriver"
-  # Eliminado sqlite3 de aquí ya que está en development, test
+end
+
+# PostgreSQL solo para producción
+group :production do
+  gem "pg"  # Añade esta línea
 end
