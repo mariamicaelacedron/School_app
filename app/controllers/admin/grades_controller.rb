@@ -2,8 +2,8 @@ module Admin
   class GradesController < ApplicationController
     before_action :authenticate_user!
     before_action :ensure_admin!
-    before_action :set_grade, only: [:show, :edit, :update, :destroy]
-    
+    before_action :set_grade, only: [ :show, :edit, :update, :destroy ]
+
     def index
       @users = User.joins(:grades).where(role: "user").distinct
       if params[:search].present?
@@ -25,12 +25,12 @@ module Admin
       }
       @current_semester = params[:semester] || 1
     end
-    
+
     def create
       @grade = Grade.new(grade_params)
       @grade.admin = current_user
       @grade.student_name ||= @grade.user.name if @grade.user
-      
+
       if @grade.save
         redirect_to admin_grade_path(@grade, semester: grade_params[:semester]), notice: "Calificación creada exitosamente"
       else
@@ -38,7 +38,7 @@ module Admin
         render :new
       end
     end
-    
+
     def update
       if @grade.update(grade_params)
         redirect_to admin_grade_path(@grade, semester: grade_params[:semester]), notice: "Calificación actualizada exitosamente"
@@ -55,13 +55,13 @@ module Admin
 
     def destroy
       @grade.destroy
-      redirect_to admin_grade_path(@grade.user.grades_received.first || @grade.user, semester: params[:semester]), 
+      redirect_to admin_grade_path(@grade.user.grades_received.first || @grade.user, semester: params[:semester]),
                   notice: "Calificación eliminada exitosamente"
     end
 
 
     private
-    
+
     def set_grade
       @grade = Grade.find(params[:id])
     end
