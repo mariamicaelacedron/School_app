@@ -55,7 +55,8 @@ module Admin
 
     def destroy
       @grade.destroy
-      redirect_to admin_grades_path, notice: "Calificación eliminada exitosamente"
+      redirect_to admin_grade_path(@grade.user.grades_received.first || @grade.user, semester: params[:semester]), 
+                  notice: "Calificación eliminada exitosamente"
     end
 
 
