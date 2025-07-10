@@ -10,23 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Traer el código
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Instalar Ruby
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2
 
-      # 3. Instalar SQLite en el runner
       - name: Instalar dependencias del sistema
         run: |
           sudo apt-get update
           sudo apt-get install -y sqlite3 libsqlite3-dev
 
-      # 4. Cachear gems
       - name: Cachear gems
         uses: actions/cache@v3
         with:
@@ -35,20 +31,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
-      # 5. Instalar gems
       - name: Instalar gems
         run: bundle install --jobs=4 --retry=3
 
-      # 6. Preparar la base de datos de test
       - name: Preparar DB de test
         env:
           RAILS_ENV: test
         run: |
           unset DATABASE_URL
-          bundle exec rails db:drop db:create db:schema:load
+          # 1) Fija el entorno dentro de structure.sql
+          bundle exec rails db:environment:set RAILS_ENV=test
+          # 2) Carga el esquema SQL (structure.sql) en SQLite3
+          bundle exec rails db:drop db:create db:structure:load
 
-      # 7. Ejecutar la suite de tests
-      - name: Ejecutar test suite
+      - name: Ejecutar la suite de tests
         env:
           RAILS_ENV: test
         run: |
