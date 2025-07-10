@@ -1,0 +1,32 @@
+<% if grades.any? %>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>Asignatura</th>
+          <th>Nota</th>
+          <th>Comentario</th>
+          <th>Profesor</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% grades.each do |grade| %>
+          <tr>
+            <td><%= grade.subject %></td>
+            <td class="<%= grade.score < 6 ? 'text-danger' : 'text-success' %> fw-bold">
+              <%= grade.score %>
+            </td>
+            <td><%= grade.comment %></td>
+            <td><%= grade.admin.email %></td>
+            <td><%= grade.created_at.strftime("%d/%m/%Y") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="alert alert-info">
+    No hay calificaciones para este semestre.
+  </div>
+<% end %>

@@ -1,0 +1,41 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3">Calificaciones de <%= @grade.student_name %></h1>
+    <%= link_to 'Agregar Nueva Nota', 
+                new_admin_grade_path(user_id: @grade.user_id, semester: params[:semester]), 
+                class: 'btn btn-primary' %>
+  </div>
+
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+      <%= link_to "Primer Semestre", admin_grade_path(@grade, semester: 1), 
+          class: "nav-link #{'active' if params[:semester] == '1' || params[:semester].blank?}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Segundo Semestre", admin_grade_path(@grade, semester: 2), 
+          class: "nav-link #{'active' if params[:semester] == '2'}" %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "Tercer Semestre", admin_grade_path(@grade, semester: 3), 
+          class: "nav-link #{'active' if params[:semester] == '3'}" %>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <% if @semesters[1].any? || @semesters[2].any? || @semesters[3].any? %>
+      <div class="tab-pane fade <%= 'show active' if params[:semester] == '1' || params[:semester].blank? %>">
+        <%= render 'semester_table', grades: @semesters[1] %>
+      </div>
+      <div class="tab-pane fade <%= 'show active' if params[:semester] == '2' %>">
+        <%= render 'semester_table', grades: @semesters[2] %>
+      </div>
+      <div class="tab-pane fade <%= 'show active' if params[:semester] == '3' %>">
+        <%= render 'semester_table', grades: @semesters[3] %>
+      </div>
+    <% else %>
+      <div class="alert alert-info">No hay calificaciones registradas para este estudiante.</div>
+    <% end %>
+  </div>
+
+  <%= link_to 'Volver al listado', admin_grades_path, class: 'btn btn-secondary mt-3' %>
+</div>
