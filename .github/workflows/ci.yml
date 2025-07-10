@@ -10,39 +10,47 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      # 1. Traer el código
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.2
+      # 2. Instalar Ruby
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2
 
-    - name: Instalar dependencias del sistema
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y sqlite3 libsqlite3-dev
+      # 3. Instalar SQLite en el runner
+      - name: Instalar dependencias del sistema
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sqlite3 libsqlite3-dev
 
-    - name: Cachear gems
-      uses: actions/cache@v3
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-gems-
+      # 4. Cachear gems
+      - name: Cachear gems
+        uses: actions/cache@v3
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
 
-    - name: Instalar gems
-      run: bundle install --jobs=4 --retry=3
+      # 5. Instalar gems
+      - name: Instalar gems
+        run: bundle install --jobs=4 --retry=3
 
-    - name: Preparar DB de test
-      env:
-        RAILS_ENV: test
-        DATABASE_URL: ""      # fuerza SQLite
-      run: |
-        bin/rails db:drop db:create db:schema:load
+      # 6. Preparar la base de datos de test
+      - name: Preparar DB de test
+        env:
+          RAILS_ENV: test
+        run: |
+          unset DATABASE_URL
+          bundle exec rails db:drop db:create db:schema:load
 
-    - name: Ejecutar test suite
-      env:
-        RAILS_ENV: test
-        DATABASE_URL: ""
-      run: bundle exec rails test
+      # 7. Ejecutar la suite de tests
+      - name: Ejecutar test suite
+        env:
+          RAILS_ENV: test
+        run: |
+          unset DATABASE_URL
+          bundle exec rails test
