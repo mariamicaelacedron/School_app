@@ -16,35 +16,6 @@ module Admin
       @users = User.where(role: "user")
     end
 
-    def create
-      @grade = Grade.new(grade_params)
-      @grade.admin = current_user
-      if @grade.save
-        redirect_to admin_grades_path, notice: "Calificación creada exitosamente"
-      else
-        @users = User.where(role: "user")
-        render :new
-      end
-    end
-
-    def edit
-      @users = User.where(role: "user")
-    end
-
-    def update
-      if @grade.update(grade_params)
-        redirect_to admin_grades_path, notice: "Calificación actualizada exitosamente"
-      else
-        @users = User.where(role: "user")
-        render :edit
-      end
-    end
-
-    def destroy
-      @grade.destroy
-      redirect_to admin_grades_path, notice: "Calificación eliminada exitosamente"
-    end
-
     def show
       @student = @grade.user
       @semesters = {
@@ -52,7 +23,41 @@ module Admin
         2 => @student.grades_received.where(semester: 2).order(created_at: :desc),
         3 => @student.grades_received.where(semester: 3).order(created_at: :desc)
       }
+      @current_semester = params[:semester] || 1
     end
+    
+    def create
+      @grade = Grade.new(grade_params)
+      @grade.admin = current_user
+      @grade.student_name ||= @grade.user.name if @grade.user
+      
+      if @grade.save
+        redirect_to admin_grade_path(@grade, semester: grade_params[:semester]), notice: "Calificación creada exitosamente"
+      else
+        @users = User.where(role: "user")
+        render :new
+      end
+    end
+    
+    def update
+      if @grade.update(grade_params)
+        redirect_to admin_grade_path(@grade, semester: grade_params[:semester]), notice: "Calificación actualizada exitosamente"
+      else
+        @users = User.where(role: "user")
+        render :edit
+      end
+    end
+
+    def edit
+      @users = User.where(role: "user")
+    end
+
+
+    def destroy
+      @grade.destroy
+      redirect_to admin_grades_path, notice: "Calificación eliminada exitosamente"
+    end
+
 
     private
     
