@@ -2,7 +2,7 @@ module Admin
   class GradesController < ApplicationController
     before_action :authenticate_user!
     before_action :ensure_admin!
-    before_action :set_grade, only: [ :show, :edit, :update, :destroy ]
+    before_action :set_grade, only: [:show, :edit, :update, :destroy]
     
     def index
       @users = User.joins(:grades).where(role: "user").distinct
@@ -12,7 +12,7 @@ module Admin
     end
 
     def new
-      @grade = Grade.new(user_id: params[:user_id])
+      @grade = Grade.new(user_id: params[:user_id], semester: 1)
       @users = User.where(role: "user")
     end
 
@@ -46,7 +46,12 @@ module Admin
     end
 
     def show
-      @grades = @grade.user.grades_received.includes(:admin)
+      @student = @grade.user
+      @semesters = {
+        1 => @student.grades_received.where(semester: 1).order(created_at: :desc),
+        2 => @student.grades_received.where(semester: 2).order(created_at: :desc),
+        3 => @student.grades_received.where(semester: 3).order(created_at: :desc)
+      }
     end
 
     private
@@ -56,7 +61,7 @@ module Admin
     end
 
     def grade_params
-      params.require(:grade).permit(:user_id, :subject, :score, :comment, :student_name)
+      params.require(:grade).permit(:user_id, :subject, :score, :comment, :student_name, :semester)
     end
 
     def ensure_admin!

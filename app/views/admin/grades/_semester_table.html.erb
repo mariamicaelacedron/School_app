@@ -1,0 +1,42 @@
+<% if grades.any? %>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>Asignatura</th>
+          <th>Nota</th>
+          <th>Comentario</th>
+          <th>Profesor</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% grades.each do |grade| %>
+          <tr>
+            <td><%= grade.subject %></td>
+            <td class="<%= grade.score < 5 ? 'text-danger' : 'text-success' %> fw-bold">
+              <%= grade.score %>
+            </td>
+            <td><%= grade.comment %></td>
+            <td><%= grade.admin.email %></td>
+            <td><%= grade.created_at.strftime("%d/%m/%Y") %></td>
+            <td>
+              <%= link_to edit_admin_grade_path(grade), class: 'btn btn-sm btn-primary me-1' do %>
+                <i class="bi bi-pencil"></i>
+              <% end %>
+              <%= button_to admin_grade_path(grade), 
+                          method: :delete,
+                          form: { data: { confirm: '¿Eliminar esta calificación?' } },
+                          class: 'btn btn-sm btn-danger' do %>
+                <i class="bi bi-trash"></i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="alert alert-info">No hay calificaciones para este semestre.</div>
+<% end %>
