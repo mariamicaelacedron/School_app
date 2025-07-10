@@ -16,16 +16,13 @@
         <%= form.select :user_id,
           options_from_collection_for_select(users, 'id', 'email', grade.user_id),
           { include_blank: true },
-          { class: 'form-select', required: true, 
-            onchange: "document.getElementById('grade_student_name').value = this.options[this.selectedIndex].text.split(' - ')[0]" } %>
+          { class: 'form-select', required: true } %>
       <% else %>
         <div class="alert alert-danger">
           No hay estudiantes disponibles para asignar calificaciones.
         </div>
       <% end %>
     </div>
-    
-    <%= form.hidden_field :student_name, value: grade.user&.name || '' %>
     
     <div class="mb-3">
       <%= form.label :subject, 'Asignatura', class: 'form-label' %>
@@ -54,14 +51,3 @@
       <%= link_to 'Cancelar', admin_grades_path, class: 'btn btn-outline-secondary' %>
     </div>
   <% end %>
-  
-  <script>
-  // Precargar nombre cuando ya hay un estudiante seleccionado
-  document.addEventListener('DOMContentLoaded', function() {
-    const select = document.querySelector('select#grade_user_id');
-    if (select && select.value) {
-      document.getElementById('grade_student_name').value = select.options[select.selectedIndex].text.split(' - ')[0];
-    }
-  });
-  </script>
-  
