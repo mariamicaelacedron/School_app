@@ -11,7 +11,7 @@ class FixGradesUserRelation < ActiveRecord::Migration[8.0]
     if foreign_key_exists?(:grades, column: :student_id)
       remove_foreign_key :grades, column: :student_id
     end
-    
+
     add_foreign_key :grades, :users, column: :user_id unless foreign_key_exists?(:grades, column: :user_id)
   end
 end

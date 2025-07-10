@@ -4,14 +4,14 @@ class FixGradesUserIdColumn < ActiveRecord::Migration[8.0]
     if column_exists?(:grades, :student_id)
       # Renombrar la columna
       rename_column :grades, :student_id, :user_id
-      
+
       # Eliminar la antigua clave foránea
       remove_foreign_key :grades, :users, column: :student_id
-      
+
       # Agregar la nueva clave foránea
       add_foreign_key :grades, :users, column: :user_id
     end
-    
+
     # Asegurarse que la columna admin_id hace referencia a users
     unless foreign_key_exists?(:grades, column: :admin_id)
       add_foreign_key :grades, :users, column: :admin_id
