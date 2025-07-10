@@ -2,13 +2,20 @@ module Admin
   class GradesController < ApplicationController
     before_action :authenticate_user!
     before_action :ensure_admin!
+    before_action :set_grade, only: [ :show, :edit, :update, :destroy ]
+    
     def index
-      @grades = Grade.all.includes(:user, :admin)
+      @users = User.joins(:grades).where(role: "user").distinct
+      if params[:search].present?
+        @users = @users.joins(:grades).where("grades.student_name LIKE ?", "%#{params[:search]}%")
+      end
     end
+
     def new
-      @grade = Grade.new
+      @grade = Grade.new(user_id: params[:user_id])
       @users = User.where(role: "user")
     end
+
     def create
       @grade = Grade.new(grade_params)
       @grade.admin = current_user
@@ -16,13 +23,42 @@ module Admin
         redirect_to admin_grades_path, notice: "Calificación creada exitosamente"
       else
         @users = User.where(role: "user")
-        render :new, status: :unprocessable_entity
+        render :new
       end
     end
+
+    def edit
+      @users = User.where(role: "user")
+    end
+
+    def update
+      if @grade.update(grade_params)
+        redirect_to admin_grades_path, notice: "Calificación actualizada exitosamente"
+      else
+        @users = User.where(role: "user")
+        render :edit
+      end
+    end
+
+    def destroy
+      @grade.destroy
+      redirect_to admin_grades_path, notice: "Calificación eliminada exitosamente"
+    end
+
+    def show
+      @grades = @grade.user.grades_received.includes(:admin)
+    end
+
     private
+    
+    def set_grade
+      @grade = Grade.find(params[:id])
+    end
+
     def grade_params
       params.require(:grade).permit(:user_id, :subject, :score, :comment, :student_name)
     end
+
     def ensure_admin!
       unless current_user.admin?
         redirect_to root_path, alert: "No tienes permisos de administrador"

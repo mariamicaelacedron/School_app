@@ -1,10 +1,10 @@
-<div class="container">
-  <h1 class="mb-4">Mis Calificaciones</h1>
+<div class="container mt-4">
+  <h1 class="h3 mb-4">Mis Calificaciones</h1>
   
   <% if @grades.any? %>
     <div class="table-responsive">
-      <table class="table">
-        <thead>
+      <table class="table table-bordered table-hover">
+        <thead class="table-light">
           <tr>
             <th>Asignatura</th>
             <th>Nota</th>
@@ -17,7 +17,9 @@
           <% @grades.each do |grade| %>
             <tr>
               <td><%= grade.subject %></td>
-              <td><%= grade.score %></td>
+              <td class="<%= grade.score < 6 ? 'text-danger' : 'text-success' %> fw-bold">
+                <%= grade.score %>
+              </td>
               <td><%= grade.comment %></td>
               <td><%= grade.admin.email %></td>
               <td><%= grade.created_at.to_date %></td>

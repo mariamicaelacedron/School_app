@@ -1,30 +1,83 @@
-<div class="container">
-  <h1>Administrar Calificaciones</h1>
-  
-  <%= link_to 'Nueva Calificación', new_admin_grade_path, class: 'btn btn-primary mb-3' %>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3">Calificaciones</h1>
+    <%= link_to 'Nueva Calificación', new_admin_grade_path, class: 'btn btn-primary' %>
+  </div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Estudiante</th>
-      <th>Nombre</th>
-      <th>Asignatura</th>
-      <th>Nota</th>
-      <th>Comentario</th>
-      <th>Profesor</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @grades.each do |grade| %>
-      <tr>
-        <td><%= grade.user.email %></td> <!-- Cambiado de grade.student.email -->
-        <td><%= grade.student_name %> (<%= grade.user.email %>)</td>
-        <td><%= grade.subject %></td>
-        <td><%= grade.score %></td>
-        <td><%= grade.comment %></td>
-        <td><%= grade.admin.email %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <%= form_with url: admin_grades_path, method: :get, local: true, class: "row g-3" do |f| %>
+        <div class="col-md-8">
+          <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Buscar por nombre de estudiante..." %>
+        </div>
+        <div class="col-md-2">
+          <%= submit_tag "Buscar", class: "btn btn-primary w-100" %>
+        </div>
+        <div class="col-md-2">
+          <%= link_to "Limpiar", admin_grades_path, class: "btn btn-outline-secondary w-100" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>Estudiante</th>
+          <th>Email</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @users.any? %>
+          <% @users.each do |user| %>
+            <% sample_grade = user.grades_received.first %>
+            <tr>
+              <td>
+                <% if sample_grade %>
+                  <%= form_with model: [:admin, sample_grade], local: true, html: { class: "d-inline" } do |f| %>
+                    <%= f.text_field :student_name, value: sample_grade.student_name, class: "form-control d-inline w-auto" %>
+                    <%= f.submit "Actualizar", class: "btn btn-sm btn-outline-secondary ms-2" %>
+                  <% end %>
+                <% else %>
+                  <%= user.name %>
+                <% end %>
+              </td>
+              <td><%= user.email %></td>
+              <td>
+                <div class="d-flex">
+                  <% if sample_grade %>
+                    <%= link_to admin_grade_path(sample_grade), class: 'btn btn-sm btn-outline-primary me-2' do %>
+                      <i class="bi bi-eye-fill"></i> Ver
+                    <% end %>
+                  <% end %>
+                  <%= link_to new_admin_grade_path(user_id: user.id), class: 'btn btn-sm btn-success me-2' do %>
+                    <i class="bi bi-plus-circle-fill"></i> Agregar
+                  <% end %>
+                  <% if sample_grade %>
+                    <%= button_to 'Eliminar', admin_grade_path(sample_grade), 
+                        method: :delete, 
+                        form: { data: { turbo_confirm: '¿Eliminar todas las calificaciones de este estudiante?' } },
+                        class: 'btn btn-sm btn-outline-danger' %>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="3" class="text-center">
+              <% if params[:search].present? %>
+                No se encontraron estudiantes con ese nombre.
+              <% else %>
+                No hay estudiantes registrados.
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

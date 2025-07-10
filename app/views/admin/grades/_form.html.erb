@@ -1,0 +1,51 @@
+<%= form_with(model: [:admin, grade], local: true) do |form| %>
+    <% if grade.errors.any? %>
+      <div class="alert alert-danger">
+        <h4><%= pluralize(grade.errors.count, "error") %> impiden guardar esta calificación:</h4>
+        <ul>
+          <% grade.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  
+    <div class="mb-3">
+      <%= form.label :user_id, 'Estudiante', class: 'form-label' %>
+      <% if users.any? %>
+        <%= form.select :user_id,
+          options_from_collection_for_select(users, 'id', 'email', grade.user_id),
+          { include_blank: true },
+          { class: 'form-select', required: true } %>
+      <% else %>
+        <div class="alert alert-danger">
+          No hay estudiantes disponibles para asignar calificaciones.
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="mb-3">
+      <%= form.label :student_name, 'Nombre del Estudiante', class: 'form-label' %>
+      <%= form.text_field :student_name, class: 'form-control', required: true %>
+    </div>
+    
+    <div class="mb-3">
+      <%= form.label :subject, 'Asignatura', class: 'form-label' %>
+      <%= form.text_field :subject, class: 'form-control', required: true %>
+    </div>
+    
+    <div class="mb-3">
+      <%= form.label :score, 'Nota', class: 'form-label' %>
+      <%= form.number_field :score, step: 0.1, min: 0, max: 10, class: 'form-control', required: true %>
+    </div>
+    
+    <div class="mb-3">
+      <%= form.label :comment, 'Comentario', class: 'form-label' %>
+      <%= form.text_area :comment, class: 'form-control', rows: 3 %>
+    </div>
+    
+    <div class="actions">
+      <%= form.submit grade.persisted? ? 'Actualizar Calificación' : 'Guardar Calificación', class: 'btn btn-primary' %>
+      <%= link_to 'Cancelar', admin_grades_path, class: 'btn btn-outline-secondary' %>
+    </div>
+  <% end %>
