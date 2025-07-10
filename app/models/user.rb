@@ -8,8 +8,9 @@ class User < ApplicationRecord
   # Asignar rol por defecto
   after_initialize :set_default_role, if: :new_record?
   has_many :grades
-  has_many :grades_received, class_name: 'Grade', foreign_key: 'student_id', dependent: :destroy
-  has_many :grades_given, class_name: 'Grade', foreign_key: 'admin_id', dependent: :destroy
+  has_many :grades_received, class_name: 'Grade', foreign_key: 'user_id'
+  has_many :grades_assigned, class_name: 'Grade', foreign_key: 'admin_id'
+  has_one :student
 
   private
 

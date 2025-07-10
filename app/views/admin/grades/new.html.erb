@@ -1,0 +1,43 @@
+<div class="container">
+  <h1>Nueva Calificación</h1>
+  
+  <%= form_with(model: [:admin, @grade], local: true) do |form| %>
+    <div class="mb-3">
+      <%= form.label :user_id, 'Estudiante', class: 'form-label' %>
+      <% if @users.any? %>
+        <%= form.select :user_id,
+          options_from_collection_for_select(@users, 'id', 'email'),
+          { include_blank: true },
+          { class: 'form-select', required: true } %>
+      <% else %>
+        <div class="alert alert-danger">
+          No hay estudiantes disponibles para asignar calificaciones.
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="mb-3">
+      <%= form.label :student_name, 'Nombre del Estudiante', class: 'form-label' %>
+      <%= form.text_field :student_name, class: 'form-control', required: true %>
+    </div>
+    
+    <div class="mb-3">
+      <%= form.label :subject, 'Asignatura', class: 'form-label' %>
+      <%= form.text_field :subject, class: 'form-control', required: true %>
+    </div>
+    
+    <div class="mb-3">
+      <%= form.label :score, 'Nota', class: 'form-label' %>
+      <%= form.number_field :score, step: 0.1, min: 0, max: 10, class: 'form-control', required: true %>
+    </div>
+    
+    <div class="mb-3">
+      <%= form.label :comment, 'Comentario', class: 'form-label' %>
+      <%= form.text_area :comment, class: 'form-control', rows: 3 %>
+    </div>
+    
+    <div class="actions">
+      <%= form.submit 'Guardar Calificación', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

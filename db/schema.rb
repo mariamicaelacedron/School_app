@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_08_015218) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_10_150324) do
   create_table "admins", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
@@ -26,15 +26,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_015218) do
   end
 
   create_table "grades", force: :cascade do |t|
-    t.integer "student_id", null: false
+    t.integer "user_id", null: false
     t.integer "admin_id", null: false
+    t.string "student_name"
+    t.string "subject"
     t.float "score"
     t.text "comment"
-    t.string "subject"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_grades_on_admin_id"
-    t.index ["student_id"], name: "index_grades_on_student_id"
+    t.index ["user_id"], name: "index_grades_on_user_id"
   end
 
   create_table "students", force: :cascade do |t|
@@ -55,13 +56,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_08_015218) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role", default: 0
+    t.string "name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "admins", "users"
-  add_foreign_key "grades", "admins"
-  add_foreign_key "grades", "students"
+  add_foreign_key "grades", "users"
+  add_foreign_key "grades", "users", column: "admin_id"
   add_foreign_key "students", "courses"
   add_foreign_key "students", "users"
 end

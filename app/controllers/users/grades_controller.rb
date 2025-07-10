@@ -3,7 +3,7 @@ module Users
     before_action :authenticate_user!
 
     def index
-      @grades = current_user.grades_received.includes(:admin, :student)
+      @grades = current_user.grades_received.includes(:admin)
     end
   end
 end

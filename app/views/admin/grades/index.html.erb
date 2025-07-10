@@ -1,0 +1,30 @@
+<div class="container">
+  <h1>Administrar Calificaciones</h1>
+  
+  <%= link_to 'Nueva Calificación', new_admin_grade_path, class: 'btn btn-primary mb-3' %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Estudiante</th>
+      <th>Nombre</th>
+      <th>Asignatura</th>
+      <th>Nota</th>
+      <th>Comentario</th>
+      <th>Profesor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @grades.each do |grade| %>
+      <tr>
+        <td><%= grade.user.email %></td> <!-- Cambiado de grade.student.email -->
+        <td><%= grade.student_name %> (<%= grade.user.email %>)</td>
+        <td><%= grade.subject %></td>
+        <td><%= grade.score %></td>
+        <td><%= grade.comment %></td>
+        <td><%= grade.admin.email %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>

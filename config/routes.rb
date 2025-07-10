@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   
   namespace :admin do
     resources :grades
-    resources :students, only: [:index, :show]
+    resources :students, only: [:index, :new, :create, :show]
   end
 
   namespace :users do
