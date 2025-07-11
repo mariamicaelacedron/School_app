@@ -4,13 +4,17 @@ module Users
       before_action :set_user, only: [:show, :edit, :update]
   
       def show
+        @latest_summary = current_user.summaries_received.order(week_start: :desc).first
       end
   
       def edit
       end
   
       def update
-        if @user.update(user_params)
+        # Eliminar el avatar si se marcó la opción de eliminar
+        @user.avatar.purge if params[:user][:remove_avatar] == '1'
+  
+        if @user.update(user_params.except(:remove_avatar))
           redirect_to users_profile_path, notice: 'Perfil actualizado correctamente.'
         else
           render :edit
@@ -24,7 +28,7 @@ module Users
       end
   
       def user_params
-        params.require(:user).permit(:name, :email, :description, :avatar, :remove_avatar)
-    end
+        params.require(:user).permit(:name, :email, :description, :avatar)
+      end
     end
   end

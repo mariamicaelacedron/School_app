@@ -11,15 +11,19 @@
               <%= f.label :avatar, "Foto de perfil", class: "form-label" %>
               <%= f.file_field :avatar, class: "form-control" %>
               <% if @user.avatar.attached? %>
-              <div class="mt-2">
-                <%= image_tag url_for(@user.avatar.variant(resize_to_limit: [80, 80])), 
-                              class: "rounded-circle", width: "80" %>
+              <div class="form-group">
+                <%= image_tag url_for(@user.avatar.variant(resize_to_limit: [100, 100])) %>
                 <div class="form-check mt-2">
-                  <%= f.check_box :remove_avatar, class: "form-check-input" %>
-                  <%= f.label :remove_avatar, "Eliminar foto actual", class: "form-check-label" %>
+                  <%= f.check_box :remove_avatar, class: 'form-check-input' %>
+                  <%= f.label :remove_avatar, "Eliminar avatar", class: 'form-check-label' %>
                 </div>
               </div>
             <% end %>
+            
+            <div class="form-group">
+              <%= f.label :avatar, "Nuevo avatar" %>
+              <%= f.file_field :avatar, class: 'form-control' %>
+            </div>
             </div>
             
             <div class="mb-3">
