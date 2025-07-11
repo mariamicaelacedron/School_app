@@ -10,17 +10,17 @@ module Admin
 
       def new
         @summary = Summary.new
-        @users = User.where(role: "user") # Obtenemos todos los usuarios normales
+        @users = User.where(role: "user")
       end
 
       def create
         @summary = Summary.new(summary_params)
-        @summary.user_id = params[:summary][:user_id] # Asignamos el usuario seleccionado
+        @summary.user_id = params[:summary][:user_id]
 
         if @summary.save
           redirect_to admin_summary_path(@summary), notice: "Resumen creado correctamente"
         else
-          @users = User.where(role: "user") # Recargamos usuarios para el render
+          @users = User.where(role: "user")
           render :new
         end
       end
@@ -28,14 +28,14 @@ module Admin
       def show; end
 
       def edit
-        @users = User.where(role: "user") # Cargamos usuarios para edición
+        @users = User.where(role: "user")
       end
 
       def update
         if @summary.update(summary_params)
           redirect_to admin_summary_path(@summary), notice: "Resumen actualizado"
         else
-          @users = User.where(role: "user") # Recargamos usuarios para el render
+          @users = User.where(role: "user")
           render :edit
         end
       end
