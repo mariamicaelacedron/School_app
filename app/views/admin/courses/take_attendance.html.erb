@@ -12,12 +12,23 @@
       <thead>
         <tr>
           <th>Estudiante</th>
+          <th>Email</th>
           <th>Asistencia</th>
         </tr>
       </thead>
       <tbody>
         <% @users.each do |user| %>
           <tr>
+            <td>
+              <div class="d-flex align-items-center">
+                <% if user.avatar.attached? %>
+                  <%= image_tag url_for(user.avatar.variant(resize_to_limit: [30, 30])), 
+                              class: "rounded-circle me-2", 
+                              style: "width: 30px; height: 30px; object-fit: cover;" %>
+                <% end %>
+                <%= user.name %>
+              </div>
+            </td>
             <td><%= user.email %></td>
             <td>
               <%= select_tag "attendance[#{user.id}]", 
