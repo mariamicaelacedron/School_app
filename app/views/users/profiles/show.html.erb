@@ -5,15 +5,15 @@
       <div class="card mb-4">
         <div class="card-body p-4">
           
-          <!-- Avatar -->
+          <!-- Avatar más grande (200x200) -->
           <div class="text-center mb-4">
             <% if @user.avatar.attached? %>
-              <%= image_tag url_for(@user.avatar.variant(resize_to_limit: [150, 150])), 
+              <%= image_tag url_for(@user.avatar.variant(resize_to_limit: [200, 200])), 
                             class: "rounded-circle border border-primary mb-3", 
-                            style: "width: 150px; height: 150px; object-fit: cover; border-width: 3px !important" %>
+                            style: "width: 200px; height: 200px; object-fit: cover; border-width: 3px !important" %>
             <% else %>
               <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mb-3 mx-auto" 
-                   style="width: 150px; height: 150px; border: 3px solid #0d6efd">
+                   style="width: 200px; height: 200px; border: 3px solid #0d6efd">
                 <span class="text-muted fs-4">Foto</span>
               </div>
             <% end %>
@@ -36,6 +36,7 @@
             <% end %>
           </div>
           
+          <!-- Resto del código permanece igual -->
           <hr class="my-4">
           
           <!-- Sección Acerca de mí -->

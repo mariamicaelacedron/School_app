@@ -25,17 +25,13 @@
         <tr>
           <td><%= summary.week_start.strftime("%d %b %Y") %></td>
           <td>
-            <div class="d-flex align-items-center">
-              <%= form_with model: [:admin, summary], local: true, html: { class: "me-2" } do |f| %>
-                <div class="input-group input-group-sm">
-                  <%= f.text_field :student_name, 
-                        value: summary.student_name.presence || summary.user.name, 
-                        class: "form-control",
-                        placeholder: "Nombre personalizado" %>
-                  <%= f.submit "Actualizar", class: "btn btn-outline-secondary" %>
-                </div>
+            <div class="d-flex flex-column">
+              <% if summary.user.name.present? && summary.user.name != summary.user.email %>
+                <span><%= summary.user.name %></span>
+              <% else %>
+                <span class="text-muted"><%= summary.user.email %></span>
               <% end %>
-              <span class="text-muted"><%= summary.user.email %></span>
+              <small class="text-muted"><%= summary.user.email %></small>
             </div>
           </td>
           <td><%= summary.participated ? "Sí" : "No" %></td>

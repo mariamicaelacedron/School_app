@@ -1,6 +1,12 @@
 <div class="card">
   <div class="card-header">
-    <h1 class="h3 mb-0">Resumen de la semana del <%= @summary.week_start.strftime("%d %b %Y") %></h1>
+    <h1 class="h3">Resumen Semanal del 
+      <% if @summary.user.name.present? && @summary.user.name != @summary.user.email %>
+        <%= @summary.user.name %>
+      <% else %>
+        <span class="text-muted"><%= @summary.user.email %></span>
+      <% end %>
+    </h1>
   </div>
   
   <div class="card-body">
