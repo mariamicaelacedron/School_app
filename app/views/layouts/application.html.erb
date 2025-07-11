@@ -38,8 +38,10 @@
                 <%= link_to 'Calificaciones', root_path, class: 'nav-link' %>
               </li>
               <li class="nav-item">
-                <%= link_to 'Resúmenes', admin_summaries_path, class: 'nav-link' %>
-              </li>
+              <%= link_to 'Resúmenes Semanales', 
+                          current_user.admin? ? admin_summaries_path : users_summaries_path, 
+                          class: 'nav-link' %>
+            </li>
             <% end %>
           </ul>
           

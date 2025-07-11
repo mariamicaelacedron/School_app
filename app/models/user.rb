@@ -5,9 +5,11 @@ class User < ApplicationRecord
   enum :role, { user: 0, admin: 1 }, default: :user
 
   after_initialize :set_default_role, if: :new_record?
+
   has_many :grades
   has_many :grades_received, class_name: "Grade", foreign_key: "user_id"
   has_many :grades_assigned, class_name: "Grade", foreign_key: "admin_id"
+  has_many :summaries_received, class_name: 'Summary', foreign_key: 'user_id'
 
   private
 
