@@ -33,19 +33,25 @@
         
         <div class="collapse navbar-collapse" id="navbarContent">
           <ul class="navbar-nav me-auto">
-            <% if user_signed_in? %>
-              <li class="nav-item">
-                <%= link_to 'Mi Perfil', users_profile_path, class: 'nav-link' %>
-              </li>
-              <li class="nav-item">
-                <%= link_to 'Calificaciones', root_path, class: 'nav-link' %>
-              </li>
-              <li class="nav-item">
-              <%= link_to 'Resúmenes Semanales', 
-                          current_user.admin? ? admin_summaries_path : users_summaries_path, 
-                          class: 'nav-link' %>
+          <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to 'Mi Perfil', users_profile_path, class: 'nav-link' %>
+          </li>
+          <% if current_user.admin? %>
+            <li class="nav-item">
+              <%= link_to 'Cursos', admin_courses_path, class: 'nav-link' %>            </li>
+            <li class="nav-item">
+            <%= link_to 'Calificaciones', root_path, class: 'nav-link' %>
+          </li>
+            <li class="nav-item">
+              <%= link_to 'Resúmenes Semanales', admin_summaries_path, class: 'nav-link' %>
             </li>
-            <% end %>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to 'Resúmenes Semanales', users_summaries_path, class: 'nav-link' %>
+            </li>
+          <% end %>
+        <% end %>
           </ul>
           
           <ul class="navbar-nav">

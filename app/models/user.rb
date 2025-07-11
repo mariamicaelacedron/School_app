@@ -12,12 +12,15 @@ class User < ApplicationRecord
   has_many :grades_received, class_name: "Grade", foreign_key: "user_id"
   has_many :grades_assigned, class_name: "Grade", foreign_key: "admin_id"
   has_many :summaries_received, class_name: "Summary", foreign_key: "user_id"
+  has_many :course_users
+  has_many :courses, through: :course_users
 
   has_one_attached :avatar do |attachable|
     attachable.variant :thumb, resize_to_limit: [ 100, 100 ]
     attachable.variant :medium, resize_to_limit: [ 300, 300 ]
   end
   private
+
   def avatar_content_type
     return unless avatar.attached?
 

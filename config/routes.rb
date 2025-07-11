@@ -9,6 +9,10 @@ Rails.application.routes.draw do
       end
     end
     resources :summaries
+    resources :courses do
+      post 'take_attendance', on: :member
+      get 'take_attendance', on: :member
+    end
   end
 
   namespace :users do

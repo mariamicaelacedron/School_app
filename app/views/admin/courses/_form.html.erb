@@ -1,0 +1,59 @@
+<%# app/views/admin/courses/_form.html.erb %>
+<%= form_with(model: [:admin, @course], local: true) do |f| %>
+  <div class="form-group mb-4">
+    <%= f.label :name, 'Nombre del Curso', class: 'form-label' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group mb-4">
+    <h5 class="mb-3">Seleccionar Estudiantes</h5>
+    
+    <%# Campo de búsqueda con Bootstrap %>
+    <div class="input-group mb-3">
+      <span class="input-group-text">
+        <i class="bi bi-search"></i>
+      </span>
+      <input type="text" 
+             class="form-control search-input" 
+             placeholder="Buscar estudiantes..." 
+             data-bs-toggle="tooltip" 
+             title="Escribe para filtrar la lista">
+    </div>
+    
+    <%# Lista de estudiantes - Versión vertical pura %>
+    <div class="border rounded p-3 student-list" style="max-height: 300px; overflow-y: auto;">
+      <% @users.each do |user| %>
+        <div class="form-check py-2 border-bottom student-item">
+          <%= check_box_tag "course[user_ids][]", 
+                          user.id, 
+                          @course.users.include?(user), 
+                          id: "user_#{user.id}", 
+                          class: 'form-check-input' %>
+          <label class="form-check-label w-100" for="user_<%= user.id %>">
+            <%= user.email %>
+          </label>
+        </div>
+      <% end %>
+    </div>
+    
+    <small class="text-muted mt-2 d-block">
+      <%= @users.count %> estudiantes disponibles
+    </small>
+  </div>
+
+  <div class="form-group mt-4">
+    <%= f.submit @course.new_record? ? 'Crear Curso' : 'Actualizar Curso', 
+                class: 'btn btn-primary w-100 py-2' %>
+  </div>
+<% end %>
+
+<%# Bootstrap 5 JS para funcionalidades básicas (tooltip) %>
+<script>
+// Tooltip de Bootstrap (opcional)
+document.addEventListener('DOMContentLoaded', function() {
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  })
+})
+</script>

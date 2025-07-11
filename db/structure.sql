@@ -45,7 +45,41 @@ FOREIGN KEY ("blob_id")
   REFERENCES "active_storage_blobs" ("id")
 );
 CREATE UNIQUE INDEX "index_active_storage_variant_records_uniqueness" ON "active_storage_variant_records" ("blob_id", "variation_digest") /*application='SchoolApp'*/;
+CREATE TABLE IF NOT EXISTS "sessions" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "description" text, "start_time" datetime(6), "end_time" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+CREATE TABLE IF NOT EXISTS "session_students" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "session_id" integer NOT NULL, "student_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "attended" boolean DEFAULT 0 /*application='SchoolApp'*/, CONSTRAINT "fk_rails_02959b8614"
+FOREIGN KEY ("student_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_aee5d47d8b"
+FOREIGN KEY ("session_id")
+  REFERENCES "sessions" ("id")
+);
+CREATE INDEX "index_session_students_on_session_id" ON "session_students" ("session_id") /*application='SchoolApp'*/;
+CREATE INDEX "index_session_students_on_student_id" ON "session_students" ("student_id") /*application='SchoolApp'*/;
+CREATE TABLE IF NOT EXISTS "course_users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "course_id" integer NOT NULL, "user_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_e18783c035"
+FOREIGN KEY ("course_id")
+  REFERENCES "courses" ("id")
+, CONSTRAINT "fk_rails_e90b3a1577"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+);
+CREATE INDEX "index_course_users_on_course_id" ON "course_users" ("course_id") /*application='SchoolApp'*/;
+CREATE INDEX "index_course_users_on_user_id" ON "course_users" ("user_id") /*application='SchoolApp'*/;
+CREATE TABLE IF NOT EXISTS "attendances" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "course_id" integer NOT NULL, "user_id" integer NOT NULL, "date" date, "status" varchar DEFAULT 'present', "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_77ad02f5c5"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_2fe8e02b1e"
+FOREIGN KEY ("course_id")
+  REFERENCES "courses" ("id")
+);
+CREATE INDEX "index_attendances_on_course_id" ON "attendances" ("course_id") /*application='SchoolApp'*/;
+CREATE INDEX "index_attendances_on_user_id" ON "attendances" ("user_id") /*application='SchoolApp'*/;
 INSERT INTO "schema_migrations" (version) VALUES
+('20250711214419'),
+('20250711203739'),
+('20250711203738'),
+('20250711191752'),
+('20250711190101'),
+('20250711190053'),
 ('20250711165756'),
 ('20250711165519'),
 ('20250711161650'),
