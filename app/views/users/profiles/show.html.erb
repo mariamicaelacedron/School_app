@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body text-center">
+        <% if @user.avatar.attached? %>
+        <%= image_tag url_for(@user.avatar.variant(resize_to_limit: [150, 150])), 
+                      class: "rounded-circle mb-3", width: "150" %>
+      <% else %>
+        <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 150px; height: 150px;">
+          <%= image_tag 'default-avatar.png', width: "100" %>
+        </div>
+      <% end %>
+          
+          <h3><%= @user.name %></h3>
+          <p class="text-muted"><%= @user.email %></p>
+          
+          <%= link_to "Editar perfil", edit_users_profile_path, class: "btn btn-primary btn-sm" %>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h4>Acerca de mí</h4>
+        </div>
+        <div class="card-body">
+          <% if @user.description.present? %>
+            <%= simple_format(@user.description) %>
+          <% else %>
+            <p class="text-muted">No hay descripción aún.</p>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- Aquí puedes agregar más secciones según necesites -->
+    </div>
+  </div>
+</div>

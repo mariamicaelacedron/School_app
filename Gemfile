@@ -15,6 +15,7 @@ gem "solid_cable"
 gem "bootsnap", require: false
 gem "kamal", require: false
 gem "thruster", require: false
+gem 'image_processing', '~> 1.2'
 
 group :development, :test do
   gem "sqlite3"  # SQLite3 solo para desarrollo y pruebas
