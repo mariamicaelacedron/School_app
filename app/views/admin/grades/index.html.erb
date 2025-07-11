@@ -4,12 +4,11 @@
     <%= link_to 'Nueva Calificación', new_admin_grade_path, class: 'btn btn-primary' %>
   </div>
 
-
   <div class="card mb-4">
     <div class="card-body">
       <%= form_with url: admin_grades_path, method: :get, local: true, class: "row g-3" do |f| %>
         <div class="col-md-8">
-          <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Buscar por nombre de estudiante..." %>
+          <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Buscar por nombre o email..." %>
         </div>
         <div class="col-md-2">
           <%= submit_tag "Buscar", class: "btn btn-primary w-100" %>
@@ -36,13 +35,10 @@
             <% sample_grade = user.grades_received.first %>
             <tr>
               <td>
-                <% if sample_grade %>
-                  <%= form_with model: [:admin, sample_grade], local: true, html: { class: "d-inline" } do |f| %>
-                    <%= f.text_field :student_name, value: sample_grade.student_name, class: "form-control d-inline w-auto" %>
-                    <%= f.submit "Actualizar", class: "btn btn-sm btn-outline-secondary ms-2" %>
-                  <% end %>
-                <% else %>
+                <% if user.name.present? && user.name != user.email %>
                   <%= user.name %>
+                <% else %>
+                  <span class="text-muted"><%= user.email %></span>
                 <% end %>
               </td>
               <td><%= user.email %></td>
@@ -70,7 +66,7 @@
           <tr>
             <td colspan="3" class="text-center">
               <% if params[:search].present? %>
-                No se encontraron estudiantes con ese nombre.
+                No se encontraron estudiantes con ese criterio.
               <% else %>
                 No hay estudiantes registrados.
               <% end %>

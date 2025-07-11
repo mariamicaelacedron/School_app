@@ -35,6 +35,9 @@
           <ul class="navbar-nav me-auto">
             <% if user_signed_in? %>
               <li class="nav-item">
+                <%= link_to 'Mi Perfil', users_profile_path, class: 'nav-link' %>
+              </li>
+              <li class="nav-item">
                 <%= link_to 'Calificaciones', root_path, class: 'nav-link' %>
               </li>
               <li class="nav-item">

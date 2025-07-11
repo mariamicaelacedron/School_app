@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   namespace :users do
     resources :grades, only: [ :index, :show ]
     resources :summaries, only: [ :index, :show ]
+    resource :profile, only: [ :show, :edit, :update ], controller: "profiles"
   end
 
   authenticated :user, ->(u) { u.admin? } do
