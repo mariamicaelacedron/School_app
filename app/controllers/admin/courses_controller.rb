@@ -53,36 +53,21 @@ module Admin
     def take_attendance
       @date = params[:date] || Date.today
       @users = @course.users.order(:email)
-    
+      
       if request.post?
-        # Verifica primero si hay datos de asistencia
-        if params[:attendance].blank?
-          flash[:alert] = "No se recibieron datos de asistencia"
-          render :take_attendance and return
-        end
-    
-        begin
-          ActiveRecord::Base.transaction do
-            # Elimina asistencias existentes para esta fecha
-            @course.attendances.where(date: @date).delete_all
-            
-            # Itera solo si params[:attendance] existe
-            params[:attendance].each do |user_id, status|
-              next if user_id.blank? || status.blank?
-              
-              @course.attendances.create!(
-                user_id: user_id,
-                date: @date,
-                status: status
-              )
-            end
+        ActiveRecord::Base.transaction do
+          params[:attendance].each do |user_id, status|
+            # Busca o crea la asistencia para evitar duplicados
+            attendance = @course.attendances.find_or_initialize_by(
+              user_id: user_id,
+              date: @date
+            )
+            attendance.status = status
+            attendance.save!
           end
-          
-          redirect_to admin_course_path(@course), notice: 'Asistencia registrada exitosamente.'
-        rescue ActiveRecord::RecordInvalid => e
-          flash.now[:alert] = "Error al registrar asistencia: #{e.message}"
-          render :take_attendance
         end
+        
+        redirect_to admin_course_path(@course), notice: 'Asistencias actualizadas exitosamente.'
       end
     end
 

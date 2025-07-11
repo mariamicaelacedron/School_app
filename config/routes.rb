@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   namespace :users do
     resources :grades, only: [ :index, :show ]
     resources :summaries, only: [ :index, :show ]
-    resource :profile, only: [ :show, :edit, :update ], controller: "profiles"
+    resources :profiles, only: [:show, :edit, :update] # Ruta unificada
   end
 
   authenticated :user, ->(u) { u.admin? } do

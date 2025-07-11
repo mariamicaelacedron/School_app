@@ -3,35 +3,33 @@
   <h4>Curso: <%= @course.name %></h4>
 
   <%= form_with(url: take_attendance_admin_course_path(@course), method: :post) do |f| %>
- <div class="mb-3">
-    <%= label_tag :date, "Fecha", class: "form-label" %>
-    <%= date_field_tag :date, @date, class: "form-control", required: true %>
-  </div>
-
-   <!-- Tabla de asistencias -->
-   <table class="table">
-     <thead>
-       <tr>
-         <th>Estudiante</th>
-         <th>Presente</th>
-         <th>Ausente</th>
-         <th>Tarde</th>
-       </tr>
-     </thead>
-     <tbody>
-       <% @users.each do |user| %>
-         <tr>
-           <td><%= user.email %></td>
-           <td><%= radio_button_tag "attendance[#{user.id}]", 'present', true %></td>
-           <td><%= radio_button_tag "attendance[#{user.id}]", 'absent' %></td>
-           <td><%= radio_button_tag "attendance[#{user.id}]", 'late' %></td>
-         </tr>
-       <% end %>
-     </tbody>
-   </table>
-        
-   <%= submit_tag "Guardar", class: "btn btn-primary" %>
-
-    <%= link_to "Cancelar", admin_course_path(@course), class: "btn btn-secondary" %>
+    <div class="mb-3">
+      <%= label_tag :date, "Fecha", class: "form-label" %>
+      <%= date_field_tag :date, @date, class: "form-control", required: true %>
+    </div>
+  
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Estudiante</th>
+          <th>Asistencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.email %></td>
+            <td>
+              <%= select_tag "attendance[#{user.id}]", 
+                            options_for_select(Attendance.statuses.keys.map { |s| [s.humanize, s] }, 
+                            @course.attendances.find_by(user: user, date: @date)&.status),
+                            class: 'form-select' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  
+    <%= submit_tag "Guardar Asistencias", class: "btn btn-primary" %>
   <% end %>
 </div>

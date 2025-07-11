@@ -24,29 +24,27 @@
     <div class="card-body">
       <% if @course.users.any? %>
         <div class="table-responsive">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Fecha de Registro</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @course.users.each_with_index do |user, index| %>
-                <tr>
-                  <td><%= index + 1 %></td>
-                  <td><%= user.email %></td>
-                  <td><%= user.created_at.strftime("%d/%m/%Y") %></td>
-                  <td>
-                    <%= link_to 'Ver perfil', '#', class: 'btn btn-sm btn-info' %>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+        <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Email</th>
+            <th>Fecha de Registro</th> <!-- Corregí el orden -->
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @course.users.each_with_index do |user, index| %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= user.email %></td>
+              <td><%= user.created_at.strftime("%d/%m/%Y") %></td> <!-- Muestra la fecha -->
+              <td>
+                <%= link_to 'Ver perfil', users_profile_path(user.id), class: 'btn btn-sm btn-info' %>            </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
         </div>
       <% else %>
         <div class="alert alert-warning">
@@ -57,43 +55,44 @@
   </div>
 
   <% if @attendances.any? %>
-  <div class="card mt-4">
-    <div class="card-header bg-primary text-white">
-      <h5 class="mb-0">Historial de Asistencias</h5>
-    </div>
-    <div class="card-body">
+ <div class="card mt-4">
+  <div class="card-header bg-primary text-white d-flex justify-content-between">
+    <h5 class="mb-0">Historial de Asistencias</h5>
+    <%= link_to 'Tomar Asistencia', take_attendance_admin_course_path(@course), class: 'btn btn-light btn-sm' %>
+  </div>
+  <div class="card-body">
+    <% if @attendances.any? %>
       <% @attendances.each do |date, daily_attendances| %>
-        <div class="mb-4">
-          <h6 class="fw-bold"><%= date.strftime("%A, %d/%m/%Y") %></h6>
+        <div class="mb-4 border-bottom pb-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="fw-bold mb-0"><%= date.strftime("%A, %d/%m/%Y") %></h6>
+            <%= link_to 'Editar', take_attendance_admin_course_path(@course, date: date), 
+                        class: 'btn btn-outline-secondary btn-sm' %>
+          </div>
+          
           <div class="table-responsive">
-            <table class="table table-sm table-bordered">
-              <thead class="table-light">
+            <table class="table table-sm">
+              <% daily_attendances.each do |attendance| %>
                 <tr>
-                  <th>Estudiante</th>
-                  <th>Estado</th>
+                  <td><%= attendance.user.email %></td>
+                  <td>
+                    <span class="badge <%= attendance_status_class(attendance.status) %>">
+                      <%= attendance.status.humanize %>
+                    </span>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                <% daily_attendances.each do |attendance| %>
-                  <tr>
-                    <td><%= attendance.user.email %></td>
-                    <td>
-                      <span class="badge <%= attendance_status_class(attendance.status) %>">
-                        <%= attendance.status.humanize %>
-                      </span>
-                    </td>
-                  </tr>
-                <% end %>
-              </tbody>
+              <% end %>
             </table>
           </div>
         </div>
       <% end %>
-    </div>
+    <% else %>
+      <div class="alert alert-info">
+        No hay registros de asistencia. 
+        <%= link_to 'Tomar la primera asistencia', take_attendance_admin_course_path(@course) %>
+      </div>
+    <% end %>
   </div>
-<% else %>
-  <div class="alert alert-info mt-4">
-    No hay registros de asistencia para este curso.
-  </div>
+</div>
 <% end %>
 </div>
