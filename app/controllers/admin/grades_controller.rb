@@ -2,12 +2,12 @@ module Admin
   class GradesController < ApplicationController
     before_action :authenticate_user!
     before_action :ensure_admin!
-    before_action :set_grade, only: [ :show, :edit, :update, :destroy ]
+    before_action :set_grade, only: [:show, :edit, :update, :destroy]
 
     def index
       @users = User.joins(:grades).where(role: "user").distinct
       if params[:search].present?
-        @users = @users.joins(:grades).where("grades.student_name LIKE ?", "%#{params[:search]}%")
+        @users = @users.where("users.name LIKE ?", "%#{params[:search]}%")
       end
     end
 
@@ -29,7 +29,7 @@ module Admin
     def create
       @grade = Grade.new(grade_params)
       @grade.admin = current_user
-      @grade.student_name ||= @grade.user.name if @grade.user
+      @grade.student_name = @grade.user.name if @grade.user
 
       if @grade.save
         redirect_to admin_grade_path(@grade, semester: grade_params[:semester]), notice: "Calificación creada exitosamente"
@@ -40,6 +40,8 @@ module Admin
     end
 
     def update
+      @grade.student_name = @grade.user.name
+      
       if @grade.update(grade_params)
         redirect_to admin_grade_path(@grade, semester: grade_params[:semester]), notice: "Calificación actualizada exitosamente"
       else
@@ -52,13 +54,11 @@ module Admin
       @users = User.where(role: "user")
     end
 
-
     def destroy
       @grade.destroy
       redirect_to admin_grade_path(@grade.user.grades_received.first || @grade.user, semester: params[:semester]),
                   notice: "Calificación eliminada exitosamente"
     end
-
 
     private
 
@@ -67,7 +67,7 @@ module Admin
     end
 
     def grade_params
-      params.require(:grade).permit(:user_id, :subject, :score, :comment, :student_name, :semester)
+      params.require(:grade).permit(:user_id, :subject, :score, :comment, :semester)
     end
 
     def ensure_admin!
