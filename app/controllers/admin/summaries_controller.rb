@@ -8,7 +8,7 @@ module Admin
       @summaries = Summary.order(week_start: :desc).includes(:user)
       if params[:search].present?
         @summaries = @summaries.joins(:user).where(
-          "users.name LIKE :search OR users.email LIKE :search", 
+          "users.name LIKE :search OR users.email LIKE :search",
           search: "%#{params[:search]}%"
         )
       end
@@ -22,7 +22,6 @@ module Admin
     def create
       @summary = Summary.new(summary_params)
       @summary.user_id = params[:summary][:user_id]
-      # Asignamos automáticamente el nombre del perfil
       @summary.student_name = @summary.user.name if @summary.user
 
       if @summary.save
@@ -40,9 +39,8 @@ module Admin
     end
 
     def update
-      # Mantenemos el nombre del perfil actualizado
       @summary.student_name = @summary.user.name
-      
+
       if @summary.update(summary_params)
         redirect_to admin_summary_path(@summary), notice: "Resumen actualizado"
       else
@@ -73,7 +71,6 @@ module Admin
         :activities,
         :participated,
         :remarks
-        # Removemos :student_name de los parámetros permitidos
       )
     end
   end

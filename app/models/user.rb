@@ -14,15 +14,15 @@ class User < ApplicationRecord
   has_many :summaries_received, class_name: "Summary", foreign_key: "user_id"
 
   has_one_attached :avatar do |attachable|
-    attachable.variant :thumb, resize_to_limit: [100, 100]
-    attachable.variant :medium, resize_to_limit: [300, 300]
+    attachable.variant :thumb, resize_to_limit: [ 100, 100 ]
+    attachable.variant :medium, resize_to_limit: [ 300, 300 ]
   end
   private
   def avatar_content_type
     return unless avatar.attached?
-    
+
     unless avatar.content_type.in?(%w[image/jpeg image/png image/gif])
-      errors.add(:avatar, 'debe ser una imagen JPEG, PNG o GIF')
+      errors.add(:avatar, "debe ser una imagen JPEG, PNG o GIF")
     end
   end
 

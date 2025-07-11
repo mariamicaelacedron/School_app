@@ -2,7 +2,7 @@ module Admin
   class GradesController < ApplicationController
     before_action :authenticate_user!
     before_action :ensure_admin!
-    before_action :set_grade, only: [:show, :edit, :update, :destroy]
+    before_action :set_grade, only: [ :show, :edit, :update, :destroy ]
 
     def index
       @users = User.joins(:grades).where(role: "user").distinct
@@ -41,7 +41,7 @@ module Admin
 
     def update
       @grade.student_name = @grade.user.name
-      
+
       if @grade.update(grade_params)
         redirect_to admin_grade_path(@grade, semester: grade_params[:semester]), notice: "Calificación actualizada exitosamente"
       else
