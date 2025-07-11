@@ -24,7 +24,7 @@ jobs:
           sudo apt-get install -y sqlite3 libsqlite3-dev
 
       - name: Cachear gems
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
