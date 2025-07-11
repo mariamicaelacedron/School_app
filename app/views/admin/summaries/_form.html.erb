@@ -1,0 +1,52 @@
+<%= form_with(model: [:admin, summary], local: true) do |form| %>
+    <% if summary.errors.any? %>
+      <div class="alert alert-danger">
+        <h4><%= pluralize(summary.errors.count, "error") %> impiden guardar este resumen:</h4>
+        <ul>
+          <% summary.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  
+    <div class="mb-3">
+      <%= form.label :user_id, 'Estudiante', class: 'form-label' %>
+      <% if users.any? %>
+        <%= form.select :user_id,
+          options_from_collection_for_select(users, 'id', 'email', summary.user_id),
+          { include_blank: 'Seleccione un estudiante' },
+          { class: 'form-select', required: true } %>
+      <% else %>
+        <div class="alert alert-warning">
+          No hay estudiantes disponibles para asignar resúmenes.
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="mb-3">
+      <%= form.label :week_start, 'Semana que inicia', class: 'form-label' %>
+      <%= form.date_field :week_start, class: 'form-control', required: true %>
+    </div>
+    
+    <div class="mb-3">
+      <%= form.label :activities, 'Actividades realizadas', class: 'form-label' %>
+      <%= form.text_area :activities, class: 'form-control', rows: 4, required: true %>
+    </div>
+    
+    <div class="mb-3 form-check">
+      <%= form.check_box :participated, class: 'form-check-input' %>
+      <%= form.label :participated, 'Participó durante la semana', class: 'form-check-label' %>
+    </div>
+    
+    <div class="mb-3">
+      <%= form.label :remarks, 'Observaciones (en inglés)', class: 'form-label' %>
+      <%= form.text_area :remarks, class: 'form-control', rows: 3, required: true,
+                        placeholder: "E.g., Excellent progress on grammar exercises." %>
+    </div>
+    
+    <div class="actions">
+      <%= form.submit summary.persisted? ? 'Actualizar Resumen' : 'Crear Resumen', class: 'btn btn-primary' %>
+      <%= link_to 'Cancelar', admin_summaries_path, class: 'btn btn-outline-secondary' %>
+    </div>
+  <% end %>

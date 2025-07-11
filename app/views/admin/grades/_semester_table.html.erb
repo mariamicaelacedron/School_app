@@ -15,7 +15,7 @@
         <% grades.each do |grade| %>
           <tr>
             <td><%= grade.subject %></td>
-            <td class="<%= grade.score < 5 ? 'text-danger' : 'text-success' %> fw-bold">
+            <td class="<%= grade.score < 6 ? 'text-danger' : 'text-success' %> fw-bold">
               <%= grade.score %>
             </td>
             <td><%= grade.comment %></td>

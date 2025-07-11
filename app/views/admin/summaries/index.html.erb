@@ -1,0 +1,64 @@
+<h1>Resúmenes Semanales</h1>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <%= link_to "Nuevo Resumen", new_admin_summary_path, class: "btn btn-success" %>
+  
+  <%= form_with url: admin_summaries_path, method: :get, class: "d-flex" do |f| %>
+    <%= f.text_field :search, placeholder: "Buscar por estudiante...", 
+                     class: "form-control me-2", value: params[:search] %>
+    <%= f.submit "Buscar", class: "btn btn-outline-primary" %>
+  <% end %>
+</div>
+
+<% if @summaries.any? %>
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Semana</th>
+        <th>Estudiante</th>
+        <th>Participó</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @summaries.each do |summary| %>
+        <tr>
+          <td><%= summary.week_start.strftime("%d %b %Y") %></td>
+          <td>
+            <div class="d-flex align-items-center">
+              <%= form_with model: [:admin, summary], local: true, html: { class: "me-2" } do |f| %>
+                <div class="input-group input-group-sm">
+                  <%= f.text_field :student_name, 
+                        value: summary.student_name.presence || summary.user.name, 
+                        class: "form-control",
+                        placeholder: "Nombre personalizado" %>
+                  <%= f.submit "Actualizar", class: "btn btn-outline-secondary" %>
+                </div>
+              <% end %>
+              <span class="text-muted"><%= summary.user.email %></span>
+            </div>
+          </td>
+          <td><%= summary.participated ? "Sí" : "No" %></td>
+          <td>
+            <div class="btn-group">
+              <%= link_to "Ver", admin_summary_path(summary), class: "btn btn-sm btn-outline-primary" %>
+              <%= link_to "Editar", edit_admin_summary_path(summary), class: "btn btn-sm btn-outline-secondary" %>
+              <%= button_to "Eliminar", admin_summary_path(summary), 
+                          method: :delete, 
+                          form: { 
+                            data: { 
+                              turbo_confirm: "¿Estás seguro de eliminar este resumen?" 
+                            } 
+                          },
+                          class: "btn btn-sm btn-outline-danger" %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-info">
+    No se encontraron resúmenes registrados.
+  </div>
+<% end %>

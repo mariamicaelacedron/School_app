@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         get :get_name
       end
     end
+    resources :summaries
   end
 
   namespace :users do
