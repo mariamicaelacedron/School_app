@@ -1,0 +1,32 @@
+<h1>Mis Resúmenes Semanales</h1>
+
+<% if @summaries.any? %>
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Semana</th>
+        <th>Participación</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @summaries.each do |summary| %>
+        <tr>
+          <td><%= summary.week_start.strftime("%d %b %Y") %></td>
+          <td>
+            <span class="badge <%= summary.participated ? 'bg-success' : 'bg-warning' %>">
+              <%= summary.participated ? "Participó activamente" : "No participó" %>
+            </span>
+          </td>
+          <td>
+            <%= link_to "Ver Detalles", users_summary_path(summary), class: "btn btn-sm btn-outline-primary" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-info">
+    No tienes resúmenes asignados aún.
+  </div>
+<% end %>

@@ -8,10 +8,12 @@ Rails.application.routes.draw do
         get :get_name
       end
     end
+    resources :summaries
   end
 
   namespace :users do
     resources :grades, only: [ :index, :show ]
+    resources :summaries, only: [ :index, :show ]
   end
 
   authenticated :user, ->(u) { u.admin? } do

@@ -1,0 +1,51 @@
+<div class="card">
+  <div class="card-header">
+    <h1 class="h3 mb-0">Resumen de la semana del <%= @summary.week_start.strftime("%d %b %Y") %></h1>
+  </div>
+  
+  <div class="card-body">
+    <div class="mb-4">
+      <h2 class="h5">Estudiante</h2>
+      <p>
+        <strong><%= @summary.student_name.presence || @summary.user.name %></strong>
+        <small class="text-muted d-block mt-1"><%= @summary.user.email %></small>
+      </p>
+    </div>
+    
+    <div class="mb-4">
+      <h2 class="h5">Actividades realizadas</h2>
+      <div class="p-3 bg-light rounded">
+        <%= simple_format(@summary.activities) %>
+      </div>
+    </div>
+    
+    <div class="mb-4">
+      <h2 class="h5">Participación</h2>
+      <p><span class="badge <%= @summary.participated ? 'bg-success' : 'bg-warning' %>">
+        <%= @summary.participated ? "Participó activamente" : "No participó" %>
+      </span></p>
+    </div>
+    
+    <div class="mb-4">
+      <h2 class="h5">Observaciones</h2>
+      <div class="p-3 bg-light rounded">
+        <%= simple_format(@summary.remarks) %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card-footer d-flex justify-content-between">
+    <%= link_to "Volver", admin_summaries_path, class: "btn btn-light" %>
+    <div class="d-flex">
+      <%= link_to "Editar", edit_admin_summary_path(@summary), class: "btn btn-secondary me-2" %>
+      <%= button_to "Eliminar", admin_summary_path(@summary), 
+                    method: :delete,
+                    form: { 
+                      data: { 
+                        turbo_confirm: "¿Estás seguro de eliminar este resumen?" 
+                      } 
+                    },
+                    class: "btn btn-danger" %>
+    </div>
+  </div>
+</div>
