@@ -9,9 +9,9 @@ module Users
 
     def show
       @course = current_user.courses.includes(:attendances).find_by(id: params[:id])
-      
+
       unless @course
-        redirect_to users_courses_path, alert: 'Curso no encontrado o no tienes acceso'
+        redirect_to users_courses_path, alert: "Curso no encontrado o no tienes acceso"
         return
       end
 
@@ -26,14 +26,14 @@ module Users
         attendances = course.attendances.where(user: current_user)
         next stats[course.id] = empty_stats unless attendances.any?
 
-        present = attendances.where(status: 'present').count
-        late = attendances.where(status: 'late').count
+        present = attendances.where(status: "present").count
+        late = attendances.where(status: "late").count
         total = attendances.count
 
         stats[course.id] = {
           present: present,
           late: late,
-          absent: attendances.where(status: 'absent').count,
+          absent: attendances.where(status: "absent").count,
           total: total,
           percentage: calculate_percentage(present + late, total)
         }
@@ -56,13 +56,13 @@ module Users
       attendances = @course.attendances.where(user: current_user)
 
       if attendances.any?
-        present = attendances.where(status: 'present').count
-        late = attendances.where(status: 'late').count
-        
+        present = attendances.where(status: "present").count
+        late = attendances.where(status: "late").count
+
         @attendance_stats = {
           present: present,
           late: late,
-          absent: attendances.where(status: 'absent').count,
+          absent: attendances.where(status: "absent").count,
           total: attendances.count,
           percentage: calculate_percentage(present + late, attendances.count)
         }

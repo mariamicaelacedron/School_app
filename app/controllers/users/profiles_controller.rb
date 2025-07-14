@@ -1,9 +1,9 @@
 module Users
   class ProfilesController < ApplicationController
     before_action :authenticate_user!
-    before_action :set_user, only: [:show, :edit, :update]
-    before_action :authorize_profile_access, only: [:show]
-    before_action :ensure_own_profile, only: [:edit, :update]
+    before_action :set_user, only: [ :show, :edit, :update ]
+    before_action :authorize_profile_access, only: [ :show ]
+    before_action :ensure_own_profile, only: [ :edit, :update ]
 
     def show
       @latest_summary = @user.summaries_received.order(week_start: :desc).first
@@ -15,7 +15,7 @@ module Users
 
     def update
       @user.avatar.purge if params[:user][:remove_avatar] == "1"
-      
+
       if @user.update(user_params.except(:remove_avatar))
         redirect_to users_profile_path(@user), notice: "Perfil actualizado correctamente."
       else

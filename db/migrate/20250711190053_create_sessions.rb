@@ -5,7 +5,7 @@ class CreateSessions < ActiveRecord::Migration[7.0]
       t.text :description
       t.datetime :start_time
       t.datetime :end_time
-      
+
       t.timestamps
     end
   end

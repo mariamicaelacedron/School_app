@@ -13,19 +13,19 @@ module ApplicationHelper
   end
   def attendance_status_class(status)
     case status
-    when 'present' then 'bg-success'
-    when 'late' then 'bg-warning text-dark'
-    when 'absent' then 'bg-danger'
-    else 'bg-secondary'
+    when "present" then "bg-success"
+    when "late" then "bg-warning text-dark"
+    when "absent" then "bg-danger"
+    else "bg-secondary"
     end
   end
 
   def status_icon(status)
     case status
-    when 'present' then 'bi-check-circle-fill'
-    when 'late' then 'bi-clock-fill'
-    when 'absent' then 'bi-x-circle-fill'
-    else 'bi-question-circle-fill'
+    when "present" then "bi-check-circle-fill"
+    when "late" then "bi-clock-fill"
+    when "absent" then "bi-x-circle-fill"
+    else "bi-question-circle-fill"
     end
   end
 end
