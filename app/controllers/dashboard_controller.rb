@@ -5,7 +5,7 @@ class DashboardController < ApplicationController
     if current_user.admin?
       redirect_to admin_grades_path
     else
-      @grades = current_user.grades  # Ajusta según tus modelos
+      @grades = current_user.grades
     end
   end
 end
