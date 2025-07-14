@@ -1,0 +1,42 @@
+<div class="container">
+  <h1 class="my-4">Cursos</h1>
+  
+  <%= link_to 'Nuevo Curso', new_admin_course_path, class: 'btn btn-primary mb-4' %>
+  
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Nombre</th>
+          <th>Estudiantes</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @courses.each do |course| %>
+          <tr>
+            <td><%= course.name %></td>
+            <td><%= course.users.count %></td>
+            <td style="white-space: nowrap;">
+              <div class="d-flex gap-1">
+                <%= link_to 'Ver', admin_course_path(course), class: 'btn btn-sm btn-info' %>
+                <%= link_to 'Editar', edit_admin_course_path(course), class: 'btn btn-sm btn-warning' %>
+                <%= button_to 'Eliminar', 
+                    admin_course_path(course), 
+                    method: :delete,
+                    form: { 
+                      data: { 
+                        turbo_confirm: '¿Estás seguro de eliminar este curso?' 
+                      },
+                      class: 'd-inline' 
+                    }, 
+                    class: 'btn btn-sm btn-danger' %>
+                <%= link_to 'Asistencia', take_attendance_admin_course_path(course), class: 'btn btn-sm btn-success' %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

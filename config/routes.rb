@@ -9,12 +9,17 @@ Rails.application.routes.draw do
       end
     end
     resources :summaries
+    resources :courses do
+      post "take_attendance", on: :member
+      get "take_attendance", on: :member
+    end
   end
 
   namespace :users do
-    resources :grades, only: [ :index, :show ]
+    resources :grades
     resources :summaries, only: [ :index, :show ]
-    resource :profile, only: [ :show, :edit, :update ], controller: "profiles"
+    resources :profiles, only: [ :show, :edit, :update ]
+    resources :courses, only: [ :index, :show ]
   end
 
   authenticated :user, ->(u) { u.admin? } do
