@@ -2,7 +2,7 @@ module Admin
   class UsersController < ApplicationController
     before_action :authenticate_user!
     before_action :require_admin
-    before_action :set_user, only: [:resend_invitation]
+    before_action :set_user, only: [ :resend_invitation ]
 
     def index
       @users = User.all.order(created_at: :desc)
@@ -16,7 +16,7 @@ module Admin
       @user = User.invite!(user_params, current_user) do |u|
         u.skip_invitation = true
       end
-      
+
       if @user.persisted?
         @user.deliver_invitation
         redirect_to admin_users_path, notice: "Invitación enviada a #{@user.email}"

@@ -355,7 +355,7 @@ Devise.setup do |config|
   config.responder.redirect_status = :see_other
 
   # ==> Configuration for :registerable
-  config.invite_for = 2.weeks 
+  config.invite_for = 2.weeks
   config.invitation_limit = 5
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.

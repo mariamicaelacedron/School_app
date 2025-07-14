@@ -15,7 +15,7 @@ gem "solid_cable"
 gem "bootsnap", require: false
 gem "kamal", require: false
 gem "thruster", require: false
-gem 'devise_invitable'
+gem "devise_invitable"
 
 group :development, :test do
   gem "sqlite3"  # SQLite3 solo para desarrollo y pruebas
