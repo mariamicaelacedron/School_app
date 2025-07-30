@@ -76,7 +76,12 @@ CREATE INDEX "index_attendances_on_user_id" ON "attendances" ("user_id") /*appli
 CREATE INDEX "index_users_on_invited_by" ON "users" ("invited_by_type", "invited_by_id") /*application='SchoolApp'*/;
 CREATE UNIQUE INDEX "index_users_on_invitation_token" ON "users" ("invitation_token") /*application='SchoolApp'*/;
 CREATE INDEX "index_users_on_invited_by_id" ON "users" ("invited_by_id") /*application='SchoolApp'*/;
+CREATE TABLE IF NOT EXISTS "home_images" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "image" varchar NOT NULL, "caption" varchar NOT NULL, "description" text, "position" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "active" boolean DEFAULT 1 /*application='SchoolApp'*/);
+CREATE INDEX "index_home_images_on_position" ON "home_images" ("position") /*application='SchoolApp'*/;
+CREATE INDEX "index_home_images_on_active" ON "home_images" ("active") /*application='SchoolApp'*/;
 INSERT INTO "schema_migrations" (version) VALUES
+('20250730130620'),
+('20250729210115'),
 ('20250714194821'),
 ('20250711214419'),
 ('20250711203739'),

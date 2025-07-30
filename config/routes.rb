@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         get :get_name
       end
     end
+    
     resources :summaries
     resources :courses do
       post "take_attendance", on: :member
