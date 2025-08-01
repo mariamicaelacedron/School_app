@@ -1,110 +1,131 @@
-<!-- app/views/home/index.html.erb -->
-<div class="container-fluid p-0">
-  <!-- Hero Section -->
-  <div class="hero-section bg-primary text-white text-center py-5" style="background: linear-gradient(rgba(0, 82, 155, 0.9), rgba(0, 82, 155, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center;">
-    <div class="container">
-      <h1 class="display-4 fw-bold mb-4">El Mejor Instituto de Inglés de la Región</h1>
-      <p class="lead fs-4 mb-5">Metodología innovadora con profesores certificados y más de 15 años de experiencia formando estudiantes bilingües.</p>
-      
-      <div class="row justify-content-center">
-        <div class="col-lg-8">
-          <div class="p-4 bg-white text-dark rounded shadow">
-            <h3 class="text-primary mb-3">Nuestras actividades destacadas</h3>
-            <div class="row">
-              <div class="col-md-6 text-start">
-                <p class="mb-2"><span class="badge bg-danger me-2">✓</span> Speaking Clubs semanales</p>
-                <p class="mb-2"><span class="badge bg-danger me-2">✓</span> Reading competitions</p>
-                <p class="mb-2"><span class="badge bg-danger me-2">✓</span> Clases para niños desde 3 años</p>
+<div class="position-relative" style="min-height: 100vh;">
+    <div class="position-absolute top-0 start-0 w-100 h-100" 
+    style="background: url('<%= asset_path('alianza_inglesa6.jpg') %>') no-repeat center center; background-size: cover; z-index: -1; filter: brightness(0.8);">
+    </div>
+
+  <!-- Capa semitransparente para mejorar legibilidad -->
+  <div class="position-absolute top-0 start-0 w-100 h-100" style="
+    background-color: rgba(255, 255, 255, 0.85);
+    z-index: -1;
+  "></div>
+
+  <!-- Contenido principal -->
+  <div class="container-fluid p-0 position-relative">
+    
+    <!-- Hero Section -->
+    <div class="hero-section text-white text-center py-5" style="
+      background: linear-gradient(rgba(0, 82, 155, 0.85), rgba(0, 82, 155, 0.85));
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+    ">
+      <div class="container">
+        <h1 class="display-4 fw-bold mb-4">El Mejor Instituto de Inglés de la Región</h1>
+        <p class="lead fs-4 mb-5">Metodología innovadora con profesores certificados y más de 15 años de experiencia formando estudiantes bilingües.</p>
+        
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="p-4 bg-white text-dark rounded shadow">
+              <h3 class="text-primary mb-3">Nuestras actividades destacadas</h3>
+              <div class="row">
+                <div class="col-md-6 text-start">
+                  <p class="mb-2"><span class="badge bg-danger me-2">✓</span> Speaking Clubs semanales</p>
+                  <p class="mb-2"><span class="badge bg-danger me-2">✓</span> Reading competitions</p>
+                  <p class="mb-2"><span class="badge bg-danger me-2">✓</span> Clases para niños desde 3 años</p>
+                </div>
+                <div class="col-md-6 text-start">
+                  <p class="mb-2"><span class="badge bg-danger me-2">✓</span> Drama & Role Playing</p>
+                  <p class="mb-2"><span class="badge bg-danger me-2">✓</span> Exposición de fin de año</p>
+                  <p class="mb-2"><span class="badge bg-danger me-2">✓</span> Preparación para exámenes internacionales</p>
+                </div>
               </div>
-              <div class="col-md-6 text-start">
-                <p class="mb-2"><span class="badge bg-danger me-2">✓</span> Drama & Role Playing</p>
-                <p class="mb-2"><span class="badge bg-danger me-2">✓</span> Exposición de fin de año</p>
-                <p class="mb-2"><span class="badge bg-danger me-2">✓</span> Preparación para exámenes internacionales</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de Profesora con imagen local -->
+    <div class="row align-items-center my-5 py-5">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <%= image_tag 'alianza_inglesa3.jpeg', class: 'img-fluid rounded shadow-lg', 
+                 style: 'max-height: 500px; width: 100%; object-fit: cover;', 
+                 alt: 'Clases de inglés' %>
+          </div>
+          <div class="col-md-6 px-4">
+            <h2 class="text-primary mb-4">Aprendizaje de Calidad</h2>
+            <p class="lead text-muted">Nuestro método de enseñanza garantiza resultados visibles desde el primer mes.</p>
+            <div class="mt-4 p-3 bg-light rounded">
+              <h4 class="text-danger">Nuestra Profesora Principal</h4>
+              <p class="mb-1"><strong>Lic. María Pérez</strong></p>
+              <p class="small">Certificación CELTA de Cambridge, 10 años de experiencia en enseñanza infantil</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="bg-dark text-white py-5">
+      <div class="container text-center">
+        <h2 class="mb-5 display-5 fw-bold">Lo que dicen nuestros estudiantes</h2>
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="card bg-danger h-100 border-0">
+              <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                  <p>"El mejor instituto de inglés que he conocido. Los profesores son excelentes."</p>
+                  <footer class="blockquote-footer text-white mt-3">María G. <small>Estudiante Avanzado</small></footer>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="card bg-primary h-100 border-0">
+              <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                  <p>"En 6 meses mejoré mi inglés para conseguir un mejor trabajo."</p>
+                  <footer class="blockquote-footer text-white mt-3">Carlos R. <small>Adult Learner</small></footer>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="card bg-danger h-100 border-0">
+              <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                  <p>"A mis hijos les encanta venir a clase. Las actividades son super divertidas."</p>
+                  <footer class="blockquote-footer text-white mt-3">Ana S. <small>Madre de estudiantes</small></footer>
+                </blockquote>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Sección de Profesora -->
-  <div class="row align-items-center my-5 py-5 bg-light">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-6">
-          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" class="img-fluid rounded shadow-lg" style="max-height: 400px; width: 100%; object-fit: cover;" alt="Profesora de inglés">
+    <!-- Call to Action -->
+    <div class="bg-primary text-white text-center py-5">
+      <div class="container">
+        <h2 class="mb-4 display-5 fw-bold">¿Listo para comenzar?</h2>
+        <p class="lead mb-5">Contáctanos hoy mismo para una clase de prueba gratuita</p>
+        
+        <div class="d-flex justify-content-center flex-wrap">
+          <a href="https://wa.me/5493815974745" class="btn btn-success btn-lg mb-3 me-3">
+            WhatsApp: +54 9 3815 97-4745
+          </a>
+          <a href="tel:+543815974745" class="btn btn-light btn-lg mb-3">
+            Llamar ahora
+          </a>
         </div>
-        <div class="col-md-6 px-4">
-          <h2 class="text-primary mb-4">Aprendizaje de Calidad</h2>
-          <p class="lead text-muted">Nuestro método de enseñanza garantiza resultados visibles desde el primer mes.</p>
-          <div class="mt-4 p-3 bg-light rounded">
-            <h4 class="text-danger">Nuestra Profesora Principal</h4>
-            <p class="mb-1"><strong>Lic. María Pérez</strong></p>
-            <p class="small">Certificación CELTA de Cambridge, 10 años de experiencia en enseñanza infantil</p>
-          </div>
+        
+        <div class="mt-4">
+          <p class="small">Horarios: Lunes a Viernes de 8:00 a 20:00</p>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Testimonials Section -->
-  <div class="bg-dark text-white py-5">
-    <div class="container text-center">
-      <h2 class="mb-5 display-5 fw-bold">Lo que dicen nuestros estudiantes</h2>
-      <div class="row">
-        <div class="col-md-4 mb-4">
-          <div class="card bg-danger h-100 border-0">
-            <div class="card-body">
-              <blockquote class="blockquote mb-0">
-                <p>"El mejor instituto de inglés que he conocido. Los profesores son excelentes."</p>
-                <footer class="blockquote-footer text-white mt-3">María G. <small>Estudiante Avanzado</small></footer>
-              </blockquote>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 mb-4">
-          <div class="card bg-primary h-100 border-0">
-            <div class="card-body">
-              <blockquote class="blockquote mb-0">
-                <p>"En 6 meses mejoré mi inglés para conseguir un mejor trabajo."</p>
-                <footer class="blockquote-footer text-white mt-3">Carlos R. <small>Adult Learner</small></footer>
-              </blockquote>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 mb-4">
-          <div class="card bg-danger h-100 border-0">
-            <div class="card-body">
-              <blockquote class="blockquote mb-0">
-                <p>"A mis hijos les encanta venir a clase. Las actividades son super divertidas."</p>
-                <footer class="blockquote-footer text-white mt-3">Ana S. <small>Madre de estudiantes</small></footer>
-              </blockquote>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Call to Action -->
-  <div class="bg-primary text-white text-center py-5">
-    <div class="container">
-      <h2 class="mb-4 display-5 fw-bold">¿Listo para comenzar?</h2>
-      <p class="lead mb-5">Contáctanos hoy mismo para una clase de prueba gratuita</p>
-      
-      <div class="d-flex justify-content-center flex-wrap">
-        <a href="https://wa.me/5493815974745" class="btn btn-success btn-lg mb-3 me-3">
-          WhatsApp: +54 9 3815 97-4745
-        </a>
-        <a href="tel:+543815974745" class="btn btn-light btn-lg mb-3">
-          Llamar ahora
-        </a>
-      </div>
-      
-      <div class="mt-4">
-        <p class="small">Horarios: Lunes a Viernes de 8:00 a 20:00</p>
-      </div>
-    </div>
   </div>
 </div>

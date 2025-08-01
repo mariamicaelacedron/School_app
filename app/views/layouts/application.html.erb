@@ -23,12 +23,12 @@
 
   <body class="d-flex flex-column min-vh-100">
     <!-- Barra de navegación mejorada -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-4" style="background-color: #0d6efd !important;">
       <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="/">
-          <i class="bi bi-translate me-2 fs-4"></i>
-          <span class="fw-bold">Alianza Inglesa</span>
-        </a>
+      <a class="navbar-brand d-flex align-items-center" href="/">
+      <%= image_tag 'alianza_ingleasa1.jpeg', class: 'me-2', style: 'height: 60px; width: auto; border-radius: 4px;' %>
+      <span class="fw-bold">Alianza Inglesa</span>
+    </a>
         
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -134,56 +134,78 @@
       <%= yield %>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white mt-5">
-      <div class="container py-5">
-        <div class="row">
-          <div class="col-md-4 mb-4 mb-md-0">
-            <h5 class="text-primary">Alianza Inglesa</h5>
-            <p class="text-muted">Excelencia en la enseñanza del idioma inglés desde 1995.</p>
-            <div class="d-flex gap-3">
-              <a href="#" class="text-white"><i class="bi bi-facebook fs-4"></i></a>
-              <a href="#" class="text-white"><i class="bi bi-twitter fs-4"></i></a>
-              <a href="#" class="text-white"><i class="bi bi-instagram fs-4"></i></a>
+    <!-- Footer mejorado - Solo aparece en home y cuando NO hay usuario logueado -->
+    <% if current_page?(root_path) && !user_signed_in? %>
+      <footer class="bg-dark text-white mt-auto">
+        <div class="container py-4">
+          <div class="row g-4">
+            <div class="col-lg-6 col-md-6">
+              <div class="d-flex align-items-center mb-3">
+               <a class="navbar-brand d-flex align-items-center" href="/">
+                <%= image_tag 'alianza_ingleasa1.jpeg', class: 'me-2', style: 'height: 60px; width: auto; border-radius: 4px;' %>
+                <span class="fw-bold">Alianza Inglesa</span>
+              </a>
+              </div>
+              <p class="text-muted">Excelencia en la enseñanza del idioma inglés desde 1995.</p>
+              <div class="d-flex gap-3">
+                <a href="#" class="text-white"><i class="bi bi-facebook fs-4"></i></a>
+                <a href="#" class="text-white"><i class="bi bi-twitter-x fs-4"></i></a>
+                <a href="https://www.instagram.com/aliana_inglesa" class="text-white"><i class="bi bi-instagram fs-4"></i></a>
+                <a href="https://wa.me/543815974745" class="text-white"><i class="bi bi-whatsapp fs-4"></i></a>
+              </div>
+            </div>
+            
+            <div class="col-lg-6 col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                <h5 class="text-primary mb-3">Contacto</h5>
+                <ul class="nav flex-column">
+                  <li class="nav-item mb-2 d-flex align-items-center footer-text">
+                    <i class="bi bi-geo-alt-fill me-2"></i>
+                    Av. Principal 123, Tucumán
+                  </li>
+                  <li class="nav-item mb-2 d-flex align-items-center footer-text">
+                    <i class="bi bi-telephone-fill me-2"></i>
+                    +54 9 3815 97-4745
+                  </li>
+                  <li class="nav-item mb-2 d-flex align-items-center footer-text">
+                    <i class="bi bi-envelope-fill me-2"></i>
+                    info@alianzainglesa.edu
+                  </li>
+                </ul>
+              </div>
+              
+              <div class="col-md-6">
+                <h5 class="text-primary mb-3">Horario</h5>
+                <ul class="nav flex-column">
+                  <li class="nav-item mb-2 footer-text">
+                    Lunes a Viernes: 8:00 a 20:00
+                  </li>
+                  <li class="nav-item mb-2 footer-text">
+                    Sábados: 9:00 a 14:00
+                  </li>
+                  <li class="nav-item mb-2 footer-text">
+                    Domingos: Cerrado
+                  </li>
+                  <li class="nav-item mb-2 footer-text">
+                    Profesora: Zahira Luciana Garcia
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-          
-          <div class="col-md-2 mb-4 mb-md-0">
-            <h5 class="text-primary">Enlaces</h5>
-            <ul class="list-unstyled">
-              <li class="mb-2"><a href="#" class="text-white text-decoration-none">Inicio</a></li>
-              <li class="mb-2"><a href="#" class="text-white text-decoration-none">Cursos</a></li>
-              <li class="mb-2"><a href="#" class="text-white text-decoration-none">Calificaciones</a></li>
-              <li class="mb-2"><a href="#" class="text-white text-decoration-none">Contacto</a></li>
-            </ul>
-          </div>
-          
-          <div class="col-md-3 mb-4 mb-md-0">
-            <h5 class="text-primary">Contacto</h5>
-            <ul class="list-unstyled text-muted">
-              <li class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i> Av. Principal 123, Ciudad</li>
-              <li class="mb-2"><i class="bi bi-telephone-fill me-2"></i> +1 234 567 890</li>
-              <li class="mb-2"><i class="bi bi-envelope-fill me-2"></i> info@alianzainglesa.edu</li>
-            </ul>
-          </div>
-          
-          <div class="col-md-3">
-            <h5 class="text-primary">Horario</h5>
-            <ul class="list-unstyled text-muted">
-              <li class="mb-2">Lunes - Viernes: 8:00 - 20:00</li>
-              <li class="mb-2">Sábados: 9:00 - 14:00</li>
-              <li class="mb-2">Domingos: Cerrado</li>
-            </ul>
           </div>
         </div>
-      </div>
-      
-      <div class="bg-black py-3">
-        <div class="container text-center text-muted">
-          <small>&copy; <%= Time.current.year %> Alianza Inglesa. Todos los derechos reservados.</small>
+        
+        <div class="py-3 bg-black">
+          <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+              <small class="text-muted mb-2 mb-md-0">&copy; <%= Time.current.year %> Alianza Inglesa. Todos los derechos reservados.</small>
+            </div>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    <% end %>
 
     <!-- Bootstrap JS Bundle con Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
