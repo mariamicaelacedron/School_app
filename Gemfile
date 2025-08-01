@@ -8,6 +8,8 @@ gem "turbo-rails"
 gem "stimulus-rails"
 gem "jbuilder"
 gem "devise"
+gem "jquery-ui-rails"
+gem "carrierwave"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "solid_cache"
 gem "solid_queue"
@@ -15,7 +17,7 @@ gem "solid_cable"
 gem "bootsnap", require: false
 gem "kamal", require: false
 gem "thruster", require: false
-gem "image_processing", "~> 1.2"
+gem "devise_invitable"
 
 group :development, :test do
   gem "sqlite3"  # SQLite3 solo para desarrollo y pruebas
