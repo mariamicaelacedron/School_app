@@ -9,7 +9,7 @@ Rails.application.configure do
   # Configuración de caché
   config.action_controller.perform_caching = true
   config.public_file_server.headers = { "cache-control" => "public, max-age=#{1.year.to_i}" }
-  config.cache_store = :solid_cache_store
+  # config.cache_store = :solid_cache_store
 
   # Active Storage
   config.active_storage.service = :local

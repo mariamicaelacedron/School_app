@@ -10,7 +10,6 @@ gem "jbuilder"
 gem "devise"
 gem "pg" # <-- Aquí, fuera de cualquier grupo
 gem "tzinfo-data", platforms: %i[ windows jruby ]
-gem "solid_cache"
 gem "solid_cable"
 gem "bootsnap", require: false
 gem "kamal", require: false
