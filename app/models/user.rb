@@ -7,6 +7,7 @@ class User < ApplicationRecord
   after_initialize :set_default_role, if: :new_record?
   validates :description, length: { maximum: 500 }
   validate :avatar_content_type
+  validates :name, presence: true, on: :update
 
   has_many :grades
   has_many :grades_received, class_name: "Grade", foreign_key: "user_id"
@@ -21,6 +22,9 @@ class User < ApplicationRecord
   end
   private
 
+  def self.permitted_params
+    [ :name, :role, :email, :password, :password_confirmation, :invitation_token ]
+  end
   def avatar_content_type
     return unless avatar.attached?
 
