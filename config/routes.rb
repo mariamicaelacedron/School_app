@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+    invitations: "users/invitations"
+  }
 
   namespace :admin do
     resources :grades
@@ -8,10 +10,16 @@ Rails.application.routes.draw do
         get :get_name
       end
     end
+
     resources :summaries
     resources :courses do
       post "take_attendance", on: :member
       get "take_attendance", on: :member
+    end
+    resources :users do
+      member do
+        post :resend_invitation
+      end
     end
   end
 
