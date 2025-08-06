@@ -8,9 +8,7 @@ gem "turbo-rails"
 gem "stimulus-rails"
 gem "jbuilder"
 gem "devise"
-gem "pg"
-gem "jquery-ui-rails"
-gem "carrierwave"
+gem "pg" # <-- Aquí, fuera de cualquier grupo
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "solid_cable"
 gem "bootsnap", require: false

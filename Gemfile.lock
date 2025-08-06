@@ -408,9 +408,8 @@ DEPENDENCIES
   carrierwave
   debug
   devise
-  dotenv-rails
-  image_processing (~> 1.2)
   devise_invitable
+  dotenv-rails
   importmap-rails
   jbuilder
   jquery-ui-rails
