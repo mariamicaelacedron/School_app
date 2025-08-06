@@ -22,11 +22,10 @@
   </head>
 
   <body class="d-flex flex-column min-vh-100">
-    <!-- Barra de navegación mejorada -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-4" style="background-color: #0d6efd !important;">
       <div class="container">
       <a class="navbar-brand d-flex align-items-center" href="/">
-      <%= image_tag 'alianza_ingleasa1.jpeg', class: 'me-2', style: 'height: 60px; width: auto; border-radius: 4px;' %>
+      <%= image_tag '/images/alia.png', class: 'me-2', style: 'height: 60px; width: auto; border-radius: 4px;' %>
       <span class="fw-bold">Alianza Inglesa</span>
     </a>
         
@@ -134,7 +133,6 @@
       <%= yield %>
     </div>
 
-    <!-- Footer mejorado - Solo aparece en home y cuando NO hay usuario logueado -->
     <% if current_page?(root_path) && !user_signed_in? %>
       <footer class="bg-dark text-white mt-auto">
         <div class="container py-4">
@@ -142,7 +140,7 @@
             <div class="col-lg-6 col-md-6">
               <div class="d-flex align-items-center mb-3">
                <a class="navbar-brand d-flex align-items-center" href="/">
-                <%= image_tag 'alianza_ingleasa1.jpeg', class: 'me-2', style: 'height: 60px; width: auto; border-radius: 4px;' %>
+                <%= image_tag '/images/alia.png', class: 'me-2', style: 'height: 60px; width: auto; border-radius: 4px;' %>
                 <span class="fw-bold">Alianza Inglesa</span>
               </a>
               </div>
