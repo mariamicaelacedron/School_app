@@ -1,24 +1,23 @@
-# ========================
-# DEV & TEST con SQLite
-# ========================
-default: &default_sqlite
-  adapter: sqlite3
+# config/database.yml
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
 
 development:
-  <<: *default_sqlite
-  database: db/development.sqlite3
+  <<: *default
+  database: school_app_development
+  username: <%= ENV['PG_USERNAME'] %>
+  password: <%= ENV['PG_PASSWORD'] %>
+  host: localhost
 
 test:
-  <<: *default_sqlite
-  database: db/test.sqlite3
+  <<: *default
+  database: school_app_test
+  username: <%= ENV['PG_USERNAME'] %>
+  password: <%= ENV['PG_PASSWORD'] %>
+  host: localhost
 
-# ========================
-# PRODUCCIÓN con Postgres
-# ========================
 production:
-  adapter: postgresql           
-  encoding: unicode              
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  url: <%= ENV['DATABASE_URL'] %>  # Heroku inyecta esta variable automáticamente
+  url: <%= ENV['DATABASE_URL'] %>
