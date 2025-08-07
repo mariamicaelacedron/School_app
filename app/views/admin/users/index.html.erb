@@ -8,7 +8,7 @@
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-hover">
-          <thead class="thead-light">
+          <thead class="table-light">
             <tr>
               <th>Email</th>
               <th>Nombre</th>
@@ -22,20 +22,30 @@
               <tr>
                 <td><%= user.email %></td>
                 <td><%= user.name || 'Sin nombre' %></td>
-                <td><%= user.role %></td>
+                <td><span class="badge bg-info text-dark"><%= user.role %></span></td>
                 <td>
                   <% if user.invitation_accepted? %>
-                    <span class="badge badge-success">Activo</span>
+                    <span class="badge rounded-pill bg-success p-2">
+                      <i class="bi bi-check-circle-fill me-1"></i> Activo
+                    </span>
                   <% elsif user.invitation_sent_at %>
-                    <span class="badge badge-warning">Invitación pendiente</span>
+                    <span class="badge rounded-pill bg-warning text-dark p-2">
+                      <i class="bi bi-clock-history me-1"></i> Pendiente
+                    </span>
                   <% else %>
-                    <span class="badge badge-secondary">Sin invitar</span>
+                    <span class="badge rounded-pill bg-secondary p-2">
+                      <i class="bi bi-envelope me-1"></i> Sin invitar
+                    </span>
                   <% end %>
                 </td>
                 <td>
                   <% if user.invitation_sent_at && !user.invitation_accepted? %>
-                    <%= link_to 'Reenviar invitación', resend_invitation_admin_user_path(user), 
-                                method: :post, class: 'btn btn-sm btn-outline-primary' %>
+                    <%= link_to resend_invitation_admin_user_path(user), 
+                                method: :post, 
+                                class: 'btn btn-sm btn-outline-primary rounded-pill',
+                                data: { turbo_method: :post, confirm: '¿Reenviar invitación?' } do %>
+                      <i class="bi bi-send"></i> Reenviar
+                    <% end %>
                   <% end %>
                 </td>
               </tr>

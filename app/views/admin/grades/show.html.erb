@@ -14,15 +14,15 @@
 
   <ul class="nav nav-tabs mb-4">
     <li class="nav-item">
-      <%= link_to "Primer Semestre", admin_grade_path(@grade, semester: 1), 
+      <%= link_to "Primer Trimestre", admin_grade_path(@grade, semester: 1), 
           class: "nav-link #{'active' if params[:semester] == '1' || params[:semester].blank?}" %>
     </li>
     <li class="nav-item">
-      <%= link_to "Segundo Semestre", admin_grade_path(@grade, semester: 2), 
+      <%= link_to "Segundo Trimestre", admin_grade_path(@grade, semester: 2), 
           class: "nav-link #{'active' if params[:semester] == '2'}" %>
     </li>
     <li class="nav-item">
-      <%= link_to "Tercer Semestre", admin_grade_path(@grade, semester: 3), 
+      <%= link_to "Tercer Trimestre", admin_grade_path(@grade, semester: 3), 
           class: "nav-link #{'active' if params[:semester] == '3'}" %>
     </li>
   </ul>
