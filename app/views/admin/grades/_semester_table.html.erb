@@ -26,17 +26,17 @@
                         class: 'btn btn-sm btn-primary me-1' do %>
                 <i class="bi bi-pencil"></i>
               <% end %>
-<%= button_to admin_grade_path(grade, semester: params[:semester]), 
-              method: :delete,
-              form: { 
-                data: { 
-                  turbo_frame: "grades_table_#{params[:semester] || 1}",
-                  turbo_method: :delete
-                }
-              },
-              class: 'btn btn-sm btn-danger' do %>
-  <i class="bi bi-trash"></i>
-<% end %>
+              <%= button_to admin_grade_path(grade, semester: params[:semester]), 
+                method: :delete,
+                form: { 
+                  data: { 
+                    turbo_frame: "grades_table_#{params[:semester] || 1}",
+                    turbo_method: :delete
+                  }
+                },
+                class: 'btn btn-sm btn-danger' do %>
+                <i class="bi bi-trash"></i>
+              <% end %>
             </td>
           </tr>
         <% end %>
@@ -44,5 +44,5 @@
     </table>
   </div>
 <% else %>
-  <div class="alert alert-info">No hay calificaciones para este semestre.</div>
+  <div class="alert alert-info">No hay calificaciones para este trimestre.</div>
 <% end %>

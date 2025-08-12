@@ -35,9 +35,9 @@
     </div>
     
     <div class="mb-3">
-      <%= form.label :semester, 'Semestre', class: 'form-label' %>
+      <%= form.label :semester, 'Trimestre', class: 'form-label' %>
       <%= form.select :semester, 
-            options_for_select([['Primer Semestre', 1], ['Segundo Semestre', 2], ['Tercer Semestre', 3]], form.object.semester || 1),
+            options_for_select([['Primer Trimestre', 1], ['Segundo Trimestre', 2], ['Tercer Trimestre', 3]], form.object.semester || 1),
             {}, class: 'form-select' %>
     </div>
     
