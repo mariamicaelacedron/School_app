@@ -1,46 +1,49 @@
 <div class="container mt-4">
-  <h2>Registrar Asistencia</h2>
-  <h4>Curso: <%= @course.name %></h4>
+  <h2 class="text-center text-md-start">Registrar Asistencia</h2>
+  <h4 class="text-center text-md-start">Curso: <%= @course.name %></h4>
 
   <%= form_with(url: take_attendance_admin_course_path(@course), method: :post) do |f| %>
     <div class="mb-3">
       <%= label_tag :date, "Fecha", class: "form-label" %>
       <%= date_field_tag :date, @date, class: "form-control", required: true %>
     </div>
-  
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Estudiante</th>
-          <th>Email</th>
-          <th>Asistencia</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @users.each do |user| %>
+
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead class="table-dark">
           <tr>
-            <td>
-              <div class="d-flex align-items-center">
-                <% if user.avatar.attached? %>
-                  <%= image_tag url_for(user.avatar.variant(resize_to_limit: [30, 30])), 
-                              class: "rounded-circle me-2", 
-                              style: "width: 30px; height: 30px; object-fit: cover;" %>
-                <% end %>
-                <%= user.name %>
-              </div>
-            </td>
-            <td><%= user.email %></td>
-            <td>
-              <%= select_tag "attendance[#{user.id}]", 
-                            options_for_select(Attendance.statuses.keys.map { |s| [s.humanize, s] }, 
-                            @course.attendances.find_by(user: user, date: @date)&.status),
-                            class: 'form-select' %>
-            </td>
+            <th class="text-nowrap">Estudiante</th>
+            <th class="d-none d-sm-table-cell">Email</th>
+            <th class="text-nowrap">Asistencia</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-  
-    <%= submit_tag "Guardar Asistencias", class: "btn btn-primary" %>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <% if user.avatar.attached? %>
+                    <%= image_tag url_for(user.avatar.variant(resize_to_limit: [30, 30])), 
+                                class: "rounded-circle me-2", 
+                                style: "width: 30px; height: 30px; object-fit: cover;" %>
+                  <% end %>
+                  <span class="d-none d-sm-inline"><%= user.name %></span>
+                  <span class="d-inline d-sm-none"><%= user.name.split.first %></span>
+                </div>
+              </td>
+              <td class="d-none d-sm-table-cell"><%= user.email %></td>
+              <td>
+                <%= select_tag "attendance[#{user.id}]", 
+                              options_for_select(Attendance.statuses.keys.map { |s| [s.humanize, s] }, 
+                              @course.attendances.find_by(user: user, date: @date)&.status),
+                              class: 'form-select form-select-sm' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+  <%= submit_tag "Guardar Asistencias", class: "btn btn-primary btn-sm mt-3" %>
   <% end %>
 </div>
