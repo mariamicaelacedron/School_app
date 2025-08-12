@@ -1,6 +1,6 @@
 <% if grades.any? %>
   <div class="table-responsive">
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover align-middle">
       <thead class="table-light">
         <tr>
           <th>Asignatura</th>
@@ -21,22 +21,24 @@
             <td><%= grade.comment %></td>
             <td><%= grade.admin.email %></td>
             <td><%= grade.created_at.strftime("%d/%m/%Y") %></td>
-            <td class="d-flex">
-              <%= link_to edit_admin_grade_path(grade, semester: params[:semester]), 
-                        class: 'btn btn-sm btn-primary me-1' do %>
-                <i class="bi bi-pencil"></i>
-              <% end %>
-              <%= button_to admin_grade_path(grade, semester: params[:semester]), 
-                method: :delete,
-                form: { 
-                  data: { 
-                    turbo_frame: "grades_table_#{params[:semester] || 1}",
-                    turbo_method: :delete
-                  }
-                },
-                class: 'btn btn-sm btn-danger' do %>
-                <i class="bi bi-trash"></i>
-              <% end %>
+            <td>
+              <div class="d-flex flex-wrap gap-1">
+                <%= link_to edit_admin_grade_path(grade, semester: params[:semester]), 
+                          class: 'btn btn-sm btn-primary' do %>
+                  <i class="bi bi-pencil"></i>
+                <% end %>
+                <%= button_to admin_grade_path(grade, semester: params[:semester]), 
+                  method: :delete,
+                  form: { 
+                    data: { 
+                      turbo_frame: "grades_table_#{params[:semester] || 1}",
+                      turbo_method: :delete
+                    }
+                  },
+                  class: 'btn btn-sm btn-danger' do %>
+                  <i class="bi bi-trash"></i>
+                <% end %>
+              </div>
             </td>
           </tr>
         <% end %>

@@ -1,8 +1,8 @@
 <div class="container mt-4">
   <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
+    <div class="col-12 col-md-8 col-lg-6">
       <div class="card mb-4">
-        <div class="card-body p-4">
+        <div class="card-body p-3 p-md-4">
           
           <div class="text-center mb-4">
           <% if @user.avatar.attached? %>
@@ -41,7 +41,7 @@
           
           <!-- Sección Acerca de mí -->
           <div class="mb-4">
-            <h4 class="fw-bold mb-3 d-flex align-items-center">
+            <h4 class="fw-bold mb-3 d-flex align-items-center justify-content-center justify-content-md-start">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-circle me-2" viewBox="0 0 16 16">
                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                 <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
@@ -68,7 +68,7 @@
           
           <% unless current_user.admin? %>
             <div class="mb-2">
-              <h4 class="fw-bold mb-3 d-flex align-items-center">
+              <h4 class="fw-bold mb-3 d-flex align-items-center justify-content-center justify-content-md-start">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-activity me-2" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2z"/>
                 </svg>
@@ -76,18 +76,20 @@
               </h4>
               <div class="bg-light p-3 rounded">
                 <% if @latest_summary %>
-                  <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h5 class="mb-0">Resumen semanal</h5>
+                  <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-2">
+                    <h5 class="mb-2 mb-md-0">Resumen semanal</h5>
                     <span class="badge <%= @latest_summary.participated ? 'bg-success' : 'bg-warning' %>">
                       <%= @latest_summary.participated ? "Participó activamente" : "No participó" %>
                     </span>
                   </div>
-                  <p class="text-muted mb-2">
+                  <p class="text-muted mb-2 text-center text-md-start">
                     <small>Semana del <%= @latest_summary.week_start.strftime("%d %b %Y") %></small>
                   </p>
-                  <%= link_to "Ver detalles", users_summary_path(@latest_summary), class: "btn btn-sm btn-outline-primary" %>
+                  <div class="text-center text-md-start">
+                    <%= link_to "Ver detalles", users_summary_path(@latest_summary), class: "btn btn-sm btn-outline-primary" %>
+                  </div>
                 <% else %>
-                  <p class="text-muted mb-0">No hay resúmenes recientes</p>
+                  <p class="text-muted mb-0 text-center">No hay resúmenes recientes</p>
                 <% end %>
               </div>
             </div>

@@ -1,24 +1,24 @@
 <div class="container">
   <div class="row mb-4">
-    <div class="col">
-      <h1>Curso: <%= @course.name %></h1>
-      <%= link_to 'Volver a cursos', admin_courses_path, class: 'btn btn-secondary' %>
+    <div class="col-12">
+      <h1 class="h4 h3-md h2-lg">Curso: <%= @course.name %></h1>
+      <%= link_to 'Volver a cursos', admin_courses_path, class: 'btn btn-secondary btn-sm' %>
     </div>
   </div>
 
   <div class="card mb-4">
     <div class="card-header">
-      <h5 class="mb-0">Información del Curso</h5>
+      <h5 class="mb-0 h6 h5-md">Información del Curso</h5>
     </div>
     <div class="card-body">
-      <p><strong>Total de estudiantes:</strong> <%= @course.users.count %></p>
-      <p><strong>Creado el:</strong> <%= @course.created_at.strftime("%d/%m/%Y") %></p>
+      <p class="mb-1"><strong>Total de estudiantes:</strong> <%= @course.users.count %></p>
+      <p class="mb-0"><strong>Creado el:</strong> <%= @course.created_at.strftime("%d/%m/%Y") %></p>
     </div>
   </div>
 
   <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-      <h5 class="mb-0">Estudiantes Inscritos</h5>
+      <h5 class="mb-0 h6 h5-md">Estudiantes Inscritos</h5>
       <span class="badge bg-primary rounded-pill"><%= @course.users.count %></span>
     </div>
     <div class="card-body">
@@ -27,23 +27,25 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <th>#</th>
+                <th class="d-none d-sm-table-cell">#</th>
                 <th>Nombre</th>
-                <th>Email</th>
-                <th>Fecha de Registro</th>
+                <th class="d-none d-md-table-cell">Email</th>
+                <th class="d-none d-lg-table-cell">Fecha de Registro</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
               <% @course.users.each_with_index do |user, index| %>
                 <tr>
-                  <td><%= index + 1 %></td>
-                  <td><%= user.name %></td>
-                  <td><%= user.email %></td>
-                  <td><%= user.created_at.strftime("%d/%m/%Y") %></td>
+                  <td class="d-none d-sm-table-cell"><%= index + 1 %></td>
+                  <td><%= user.name.split.first %></td>
+                  <td class="d-none d-md-table-cell"><%= user.email %></td>
+                  <td class="d-none d-lg-table-cell"><%= user.created_at.strftime("%d/%m/%Y") %></td>
                   <td>
-                    <%= link_to 'Ver perfil', users_profile_path(user.id), class: 'btn btn-sm btn-info' %>
-                    <%= link_to 'Calificaciones', admin_grade_path(user.grades_received.first || user, semester: 1), class: 'btn btn-sm btn-warning' %>
+                    <div class="d-flex flex-wrap gap-1">
+                      <%= link_to 'Ver', users_profile_path(user.id), class: 'btn btn-sm btn-info' %>
+                      <%= link_to 'Calif.', admin_grade_path(user.grades_received.first || user, semester: 1), class: 'btn btn-sm btn-warning' %>
+                    </div>
                   </td>
                 </tr>
               <% end %>
@@ -51,7 +53,7 @@
           </table>
         </div>
       <% else %>
-        <div class="alert alert-warning">
+        <div class="alert alert-warning py-2">
           Este curso no tiene estudiantes inscritos todavía.
         </div>
       <% end %>
@@ -60,17 +62,17 @@
 
   <% if @attendances.any? %>
     <div class="card mt-4">
-      <div class="card-header bg-primary text-white d-flex justify-content-between">
-        <h5 class="mb-0">Historial de Asistencias</h5>
-        <%= link_to 'Tomar Asistencia', take_attendance_admin_course_path(@course), class: 'btn btn-light btn-sm' %>
+      <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 h6 h5-md">Historial de Asistencias</h5>
+        <%= link_to 'Tomar', take_attendance_admin_course_path(@course), class: 'btn btn-light btn-sm' %>
       </div>
       <div class="card-body">
         <% @attendances.each do |date, daily_attendances| %>
-          <div class="mb-4 border-bottom pb-3">
+          <div class="mb-3 border-bottom pb-2">
             <div class="d-flex justify-content-between align-items-center mb-2">
-              <h6 class="fw-bold mb-0"><%= date.strftime("%A, %d/%m/%Y") %></h6>
+              <h6 class="fw-bold mb-0 small"><%= date.strftime("%d/%m/%Y") %></h6>
               <%= link_to 'Editar', take_attendance_admin_course_path(@course, date: date), 
-                          class: 'btn btn-outline-secondary btn-sm' %>
+                          class: 'btn btn-outline-secondary btn-xs' %>
             </div>
             
             <div class="table-responsive">
@@ -78,7 +80,7 @@
                 <thead>
                   <tr>
                     <th>Estudiante</th>
-                    <th>Email</th>
+                    <th class="d-none d-sm-table-cell">Email</th>
                     <th>Asistencia</th>
                   </tr>
                 </thead>
@@ -88,17 +90,18 @@
                       <td>
                         <div class="d-flex align-items-center">
                           <% if attendance.user.avatar.attached? %>
-                            <%= image_tag url_for(attendance.user.avatar.variant(resize_to_limit: [30, 30])), 
-                                        class: "rounded-circle me-2", 
-                                        style: "width: 30px; height: 30px; object-fit: cover;" %>
+                            <%= image_tag url_for(attendance.user.avatar.variant(resize_to_limit: [25, 25])), 
+                                        class: "rounded-circle me-1", 
+                                        style: "width: 25px; height: 25px; object-fit: cover;" %>
                           <% end %>
-                          <%= attendance.user.name %>
+                          <span class="d-none d-md-inline"><%= attendance.user.name %></span>
+                          <span class="d-inline d-md-none"><%= attendance.user.name.split.first %></span>
                         </div>
                       </td>
-                      <td><%= attendance.user.email %></td>
+                      <td class="d-none d-sm-table-cell"><%= attendance.user.email %></td>
                       <td>
                         <span class="badge <%= attendance_status_class(attendance.status) %>">
-                          <%= attendance.status.humanize %>
+                          <%= attendance.status.first(3) %>
                         </span>
                       </td>
                     </tr>

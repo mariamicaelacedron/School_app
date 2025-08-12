@@ -109,6 +109,7 @@
                   <span>Iniciar sesión</span>
                 <% end %>
               </li>
+
             <% end %>
           </ul>
         </div>
@@ -127,67 +128,61 @@
       <%= yield %>
     </div>
 
-    <% if current_page?(root_path) && !user_signed_in? %>
+   <% if current_page?(root_path) && !user_signed_in? %>
       <footer class="bg-dark text-white mt-auto">
         <div class="container py-4">
-          <div class="row g-4">
+          <div class="row g-4 text-center text-md-start align-items-center">
             <div class="col-lg-6 col-md-6">
-              <div class="d-flex align-items-center mb-3">
-               <a class="navbar-brand d-flex align-items-center" href="/">
-                <%= image_tag '/images/alia.png', class: 'me-2', style: 'height: 60px; width: auto; border-radius: 4px;' %>
-                <span class="fw-bold">Alianza Inglesa</span>
-              </a>
+              <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-3">
+                <a class="navbar-brand d-flex align-items-center" href="/">
+                  <%= image_tag '/images/alia.png', class: 'me-2 img-fluid', style: 'height: 60px; width: auto; border-radius: 4px;' %>
+                  <span class="fw-bold">Alianza Inglesa</span>
+                </a>
               </div>
               <p class="text-muted">Excelencia en la enseñanza del idioma inglés desde 1995.</p>
-              <div class="d-flex gap-3">
+              <div class="d-flex gap-3 justify-content-center justify-content-md-start flex-wrap">
                 <a href="https://www.facebook.com/zahira.garcia.988/" class="text-white"><i class="bi bi-facebook fs-4"></i></a>
                 <a href="https://www.instagram.com/alianzainglesa?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="text-white"><i class="bi bi-instagram fs-4"></i></a>
                 <a href="https://wa.me/543815974745" class="text-white"><i class="bi bi-whatsapp fs-4"></i></a>
               </div>
             </div>
-            
+
             <div class="col-lg-6 col-md-6">
-            <div class="row">
-              <div class="col-md-6">
-                <h5 class="text-primary mb-3">Contacto</h5>
-                <ul class="nav flex-column">
-                  <li class="nav-item mb-2 d-flex align-items-center footer-text">
-                    <i class="bi bi-geo-alt-fill me-2"></i>
-                    Dirección Bartolomé mitre sin número, famailla-Tucumán
-                  </li>
-                  <li class="nav-item mb-2 d-flex align-items-center footer-text">
-                    <i class="bi bi-telephone-fill me-2"></i>
-                    +54 9 3815 97-4745
-                  </li>
-                  <li class="nav-item mb-2 d-flex align-items-center footer-text">
-                    <i class="bi bi-envelope-fill me-2"></i>
-                    Zahiragarcia52@icloud.com
-                  </li>
-                </ul>
-              </div>
-              
-              <div class="col-md-6">
-                <h5 class="text-primary mb-3">Horario</h5>
-                <ul class="nav flex-column">
-                  <li class="nav-item mb-2 footer-text">
-                    Lunes a Viernes: 10:00 a 22:00
-                  </li>
-                  <li class="nav-item mb-2 footer-text">
-                    Sabados/Domingos: Cerrado
-                  </li>
-                  <li class="nav-item mb-2 footer-text">
-                    Profesora: Zahira Luciana Garcia
-                  </li>
-                </ul>
+              <div class="row text-center text-md-start">
+                <div class="col-md-6 mb-3 mb-md-0">
+                  <h5 class="text-primary mb-3">Contacto</h5>
+                  <ul class="nav flex-column">
+                    <li class="nav-item mb-2 d-flex align-items-center justify-content-center justify-content-md-start">
+                      <i class="bi bi-geo-alt-fill me-2"></i>
+                      Dirección Bartolomé mitre sin número, famailla-Tucumán
+                    </li>
+                    <li class="nav-item mb-2 d-flex align-items-center justify-content-center justify-content-md-start">
+                      <i class="bi bi-telephone-fill me-2"></i>
+                      +54 9 3815 97-4745
+                    </li>
+                    <li class="nav-item mb-2 d-flex align-items-center justify-content-center justify-content-md-start">
+                      <i class="bi bi-envelope-fill me-2"></i>
+                      Zahiragarcia52@icloud.com
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="col-md-6">
+                  <h5 class="text-primary mb-3">Horario</h5>
+                  <ul class="nav flex-column">
+                    <li class="nav-item mb-2">Lunes a Viernes: 10:00 a 22:00</li>
+                    <li class="nav-item mb-2">Sábados/Domingos: Cerrado</li>
+                    <li class="nav-item mb-2">Profesora: Zahira Luciana Garcia</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-          </div>
         </div>
-        
+
         <div class="py-3 bg-black">
           <div class="container">
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center text-center text-md-start">
               <small class="text-muted mb-2 mb-md-0">&copy; <%= Time.current.year %> Alianza Inglesa. Todos los derechos reservados.</small>
             </div>
           </div>
