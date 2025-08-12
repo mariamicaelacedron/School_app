@@ -19,7 +19,8 @@ Rails.application.configure do
   config.force_ssl = true
 
   config.active_storage.service = :amazon
-  config.active_storage.service_urls_expire_in = 1.year
+  config.active_storage.service_urls_expire_in = nil
+  config.active_storage.content_type_to_serve_as = 'public' 
   # Logging
   config.log_tags = [ :request_id ]
   config.logger = ActiveSupport::TaggedLogging.logger(STDOUT)
