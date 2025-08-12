@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_30_130620) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_07_020348) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -95,6 +95,22 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_130620) do
     t.index ["position"], name: "index_home_images_on_position"
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.decimal "amount", precision: 10, scale: 2, null: false
+    t.date "due_date", null: false
+    t.date "payment_date"
+    t.string "status", default: "pending"
+    t.string "payment_id"
+    t.string "transaction_id"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["due_date"], name: "index_payments_on_due_date"
+    t.index ["status"], name: "index_payments_on_status"
+    t.index ["user_id"], name: "index_payments_on_user_id"
+  end
+
   create_table "session_students", force: :cascade do |t|
     t.bigint "session_id", null: false
     t.bigint "student_id", null: false
@@ -155,6 +171,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_130620) do
     t.string "invited_by_type"
     t.bigint "invited_by_id"
     t.integer "invitations_count", default: 0
+    t.string "dni"
+    t.decimal "current_balance", precision: 10, scale: 2, default: "0.0"
+    t.decimal "monthly_fee", precision: 10, scale: 2, default: "5000.0"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
@@ -170,6 +189,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_130620) do
   add_foreign_key "course_users", "users"
   add_foreign_key "grades", "users"
   add_foreign_key "grades", "users", column: "admin_id"
+  add_foreign_key "payments", "users"
   add_foreign_key "session_students", "sessions"
   add_foreign_key "session_students", "users", column: "student_id"
   add_foreign_key "students", "courses"

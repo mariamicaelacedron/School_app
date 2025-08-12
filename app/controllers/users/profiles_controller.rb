@@ -14,15 +14,16 @@ module Users
     end
 
     def update
-      @user.avatar.purge if params[:user][:remove_avatar] == "1"
+      if params.dig(:user, :remove_avatar) == "1"
+        @user.avatar.purge_later if @user.avatar.attached?
+      end
 
       if @user.update(user_params.except(:remove_avatar))
         redirect_to users_profile_path(@user), notice: "Perfil actualizado correctamente."
       else
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
     end
-
     private
 
     def set_user

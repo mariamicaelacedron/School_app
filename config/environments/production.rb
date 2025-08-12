@@ -17,7 +17,9 @@ Rails.application.configure do
   # Seguridad SSL
   config.assume_ssl = true
   config.force_ssl = true
-
+  
+  config.active_storage.service = :amazon
+  config.active_storage.service_urls_expire_in = 1.year
   # Logging
   config.log_tags = [ :request_id ]
   config.logger = ActiveSupport::TaggedLogging.logger(STDOUT)
