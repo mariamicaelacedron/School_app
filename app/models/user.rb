@@ -18,9 +18,9 @@ class User < ApplicationRecord
   has_many :courses, through: :course_users
 
   has_one_attached :avatar do |attachable|
-    attachable.variant :thumb, resize_to_limit: [100, 100]
-    attachable.variant :medium, resize_to_limit: [300, 300]
-    attachable.variant :large, resize_to_limit: [500, 500]
+    attachable.variant :thumb, resize_to_limit: [ 100, 100 ]
+    attachable.variant :medium, resize_to_limit: [ 300, 300 ]
+    attachable.variant :large, resize_to_limit: [ 500, 500 ]
   end
   private
 
@@ -37,14 +37,14 @@ class User < ApplicationRecord
 
   def avatar_size_and_type
     return unless avatar.attached?
-    
+
     # Validación de tipo (5MB máximo)
     if avatar.blob.byte_size > 5.megabytes
       errors.add(:avatar, "es demasiado grande (máximo 5MB)")
     end
-    
+
     # Validación de tipo
-    acceptable_types = ["image/jpeg", "image/png", "image/gif"]
+    acceptable_types = [ "image/jpeg", "image/png", "image/gif" ]
     unless acceptable_types.include?(avatar.content_type)
       errors.add(:avatar, "debe ser JPEG, PNG o GIF")
     end

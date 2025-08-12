@@ -16,7 +16,7 @@ gem "kamal", require: false
 gem "thruster", require: false
 gem "devise_invitable"
 gem "image_processing"
-gem 'aws-sdk-s3'
+gem "aws-sdk-s3"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
