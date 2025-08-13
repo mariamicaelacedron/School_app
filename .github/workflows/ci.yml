@@ -1,4 +1,4 @@
-name: Build only (sin tests)
+name: Rails CI
 
 on:
   push:
@@ -6,42 +6,45 @@ on:
   pull_request:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15
+        ports: ["5432:5432"]
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: school_app_test
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      RAILS_ENV: test
+      PG_USERNAME: postgres
+      PG_PASSWORD: postgres
+      PG_DATABASE: school_app_test
+      PGHOST: localhost
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2
+          bundler-cache: true
 
-      - name: Instalar dependencias del sistema
+      - name: Install dependencies
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Prepare database
         run: |
-          sudo apt-get update
-          sudo apt-get install -y sqlite3 libsqlite3-dev
+          bin/rails db:drop db:create db:schema:load
 
-      - name: Cachear gems
-        uses: actions/cache@v3
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-
-      - name: Instalar gems
-        run: bundle install --jobs=4 --retry=3
-
-      # 6. Preparar base de datos de desarrollo
-      - name: Preparar DB de desarrollo
-        env:
-          RAILS_ENV: development
-        run: |
-          unset DATABASE_URL
-          bundle exec rails db:drop db:create db:schema:load
-
-      - name: Precompilar assets
-        run: |
-          bundle exec rails assets:precompile
+      - name: Run tests
+        run: bundle exec rspec
