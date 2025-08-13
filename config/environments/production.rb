@@ -32,23 +32,30 @@ Rails.application.configure do
   # config.active_job.queue_adapter = :solid_queue
   # config.solid_queue.connects_to = { database: { writing: :queue } }
 
-  # Configuración de Action Mailer para SendGrid
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.perform_deliveries = true
+  # ===== CONFIGURACIÓN CORREGIDA PARA SENDGRID =====
+  config.action_mailer.raise_delivery_errors = true # Para detectar fallos
+  config.action_mailer.perform_deliveries = true # Activar envíos
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: 'alianza-inglesa-caed2cbd2d4b.herokuapp.com', protocol: 'https' }
+
+  
+  # Usa UNICAMENTE tu dominio de Heroku o personalizado
+  config.action_mailer.default_url_options = {
+    host: "alianza-inglesa-caed2cbd2d4b.herokuapp.com",
+    protocol: "https"
+  }
+  config.action_mailer.default_options = { from: 'Micaela Cedron <mikcedron@gmail.com>' }
+  
+
   config.action_mailer.smtp_settings = {
-    address: 'smtp.sendgrid.net',
+    address: "smtp.sendgrid.net",
     port: 587,
-    domain: 'alianza-inglesa-caed2cbd2d4b.herokuapp.com',
-    user_name: 'apikey',
-    password: ENV['SENDGRID_API_KEY'],
+    domain: "alianza-inglesa-caed2cbd2d4b.herokuapp.com", # Mismo dominio que arriba
+    user_name: "apikey", # Literalmente esta palabra
+    password: ENV["SENDGRID_API_KEY"], # Variable que ya configuraste
     authentication: :plain,
     enable_starttls_auto: true
   }
-  config.action_mailer.default_options = {
-    from: 'no-reply@alianza-inglesa-caed2cbd2d4b.herokuapp.com'
-  }
+  # ===== FIN DE CONFIGURACIÓN SENDGRID =====
 
   # Internacionalización
   config.i18n.fallbacks = true
