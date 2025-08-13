@@ -2,7 +2,7 @@ module Admin
   class UsersController < ApplicationController
     before_action :authenticate_user!
     before_action :require_admin
-    before_action :set_user, only: [ :resend_invitation ]
+    before_action :set_user, only: [ :resend_invitation, :destroy ]
 
     def index
       @users = User.all.order(created_at: :desc)
@@ -28,6 +28,15 @@ module Admin
     def resend_invitation
       @user.invite!(current_user)
       redirect_to admin_users_path, notice: "Invitación reenviada a #{@user.email}"
+    end
+    def destroy
+      if @user == current_user
+        redirect_to admin_users_path, alert: "No puedes eliminarte a ti mismo"
+      elsif @user.destroy
+        redirect_to admin_users_path, notice: "Usuario eliminado correctamente"
+      else
+        redirect_to admin_users_path, alert: "No se pudo eliminar el usuario: #{@user.errors.full_messages.to_sentence}"
+      end
     end
 
     private

@@ -11,12 +11,13 @@ class User < ApplicationRecord
   validate :avatar_size_and_type
   validate :validate_avatar
 
-  has_many :grades
-  has_many :grades_received, class_name: "Grade", foreign_key: "user_id"
-  has_many :grades_assigned, class_name: "Grade", foreign_key: "admin_id"
-  has_many :summaries_received, class_name: "Summary", foreign_key: "user_id"
-  has_many :course_users
+  has_many :grades, dependent: :destroy
+  has_many :grades_received, class_name: "Grade", foreign_key: "user_id", dependent: :destroy
+  has_many :grades_assigned, class_name: "Grade", foreign_key: "admin_id", dependent: :nullify
+  has_many :summaries_received, class_name: "Summary", foreign_key: "user_id", dependent: :destroy
+  has_many :course_users, dependent: :destroy
   has_many :courses, through: :course_users
+  has_many :attendances, dependent: :destroy
 
   has_one_attached :avatar do |attachable|
     attachable.variant :thumb, resize_to_limit: [ 100, 100 ]
