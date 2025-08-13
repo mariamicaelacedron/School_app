@@ -39,14 +39,23 @@
                   <% end %>
                 </td>
                 <td>
-                  <% if user.invitation_sent_at && !user.invitation_accepted? %>
-                    <%= link_to resend_invitation_admin_user_path(user), 
-                                method: :post, 
-                                class: 'btn btn-sm btn-outline-primary rounded-pill',
-                                data: { turbo_method: :post, confirm: '¿Reenviar invitación?' } do %>
-                      <i class="bi bi-send"></i> Reenviar
+                  <div class="d-flex gap-2">
+                    <% if user.invitation_sent_at && !user.invitation_accepted? %>
+                      <%= link_to resend_invitation_admin_user_path(user), 
+                                  method: :post, 
+                                  class: 'btn btn-sm btn-outline-primary rounded-pill',
+                                  data: { turbo_method: :post, confirm: '¿Reenviar invitación?' } do %>
+                        <i class="bi bi-send"></i> Reenviar
+                      <% end %>
                     <% end %>
-                  <% end %>
+                    
+                    <%= button_to admin_user_path(user), 
+                                method: :delete, 
+                                class: 'btn btn-sm btn-outline-danger rounded-pill',
+                                data: { turbo_confirm: '¿Estás seguro de eliminar este usuario?' } do %>
+                      <i class="bi bi-trash"></i> Eliminar
+                    <% end %>
+                  </div>
                 </td>
               </tr>
             <% end %>
