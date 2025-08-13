@@ -9,6 +9,7 @@ class User < ApplicationRecord
   validate :avatar_content_type
   validates :name, presence: true, on: :update
   validate :avatar_size_and_type
+  validate :validate_avatar
 
   has_many :grades
   has_many :grades_received, class_name: "Grade", foreign_key: "user_id"
@@ -23,6 +24,22 @@ class User < ApplicationRecord
     attachable.variant :large, resize_to_limit: [ 500, 500 ]
   end
   private
+  def validate_avatar
+    return unless avatar.attached?
+
+    # Validación de tamaño
+    if avatar.blob.byte_size > 5.megabytes
+      errors.add(:avatar, "es demasiado grande (máximo 5MB)")
+      avatar.purge # Elimina el archivo adjunto no válido
+    end
+
+    # Validación de tipo de contenido
+    acceptable_types = ["image/jpeg", "image/png", "image/gif"]
+    unless acceptable_types.include?(avatar.content_type)
+      errors.add(:avatar, "debe ser una imagen JPEG, PNG o GIF")
+      avatar.purge # Elimina el archivo adjunto no válido
+    end
+  end
 
   def self.permitted_params
     [ :name, :role, :email, :password, :password_confirmation, :invitation_token ]

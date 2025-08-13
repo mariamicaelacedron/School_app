@@ -10,7 +10,7 @@
             <div class="mb-3">
               <%= f.label :avatar, "Foto de perfil (Max 5MB, JPEG/PNG/GIF)", class: "form-label" %>
                       
-              <% if @user.avatar.attached? %>
+              <% if @user.avatar.attached? && @user.avatar.persisted? %>
                 <div class="mb-2">
                   <%= image_tag @user.avatar.variant(:medium), class: "img-thumbnail d-block mb-2" %>
                   <div class="form-check">
@@ -20,7 +20,14 @@
                 </div>
               <% end %>
                       
-              <%= f.file_field :avatar, accept: "image/jpeg,image/png,image/gif", class: "form-control" %>
+              <%= f.file_field :avatar, accept: "image/jpeg,image/png,image/gif", class: "form-control #{'is-invalid' if @user.errors[:avatar].any?}" %>
+              
+              <% if @user.errors[:avatar].any? %>
+                <div class="invalid-feedback d-block">
+                  <%= @user.errors[:avatar].to_sentence %>
+                </div>
+              <% end %>
+              
               <div class="form-text">La imagen será recortada a formato cuadrado.</div>
             </div>
             
