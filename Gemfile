@@ -17,6 +17,7 @@ gem "thruster", require: false
 gem "devise_invitable"
 gem "image_processing"
 gem "aws-sdk-s3"
+gem 'sendgrid-ruby'
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
