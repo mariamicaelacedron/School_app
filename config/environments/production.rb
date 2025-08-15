@@ -40,16 +40,16 @@ Rails.application.configure do
   
   # Usa UNICAMENTE tu dominio de Heroku o personalizado
   config.action_mailer.default_url_options = {
-    host: "alianza-inglesa-caed2cbd2d4b.herokuapp.com",
+    host: "alianzainglesa.com.ar",
     protocol: "https"
   }
-  config.action_mailer.default_options = { from: 'Micaela Cedron <mikcedron@gmail.com>' }
+  config.action_mailer.default_options = { from: 'Alianza Inglesa <no-responder@alianzainglesa.com.ar>' }
   
 
   config.action_mailer.smtp_settings = {
     address: "smtp.sendgrid.net",
     port: 587,
-    domain: "alianza-inglesa-caed2cbd2d4b.herokuapp.com", # Mismo dominio que arriba
+    domain: "alianzainglesa.com.ar", # Mismo dominio que arriba
     user_name: "apikey", # Literalmente esta palabra
     password: ENV["SENDGRID_API_KEY"], # Variable que ya configuraste
     authentication: :plain,
